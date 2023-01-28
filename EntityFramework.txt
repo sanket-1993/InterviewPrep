@@ -1,0 +1,42 @@
+	- Code First Approach: The Code First approach primarily uses classes to create the model and its relations, 
+		which are then used to create a database. 
+		This way, developers can work in an object-oriented manner without considering the database structure. By following this model, 
+		developers first write POCO classes and then use these classes to create the database. 
+		Code First is the method used by most developers using Domain-Driven Design (DDD).
+	
+	- Model First Approach: In contrast, the Model First approach uses ORM to build model classes and their relationships. 
+		Following the successful creation of the model classes and relationships, the physical database is created using these models.
+		
+	- Database-First Approach: In Entity Framework, Database First approach is used to build entity models based on existing databases 
+		and reduce the amount of code required. By using this approach, domain and context classes can be created based 
+		on existing classes.
+-----------------------------------
+		
+  WHAT ARE DIFFERENT ENTITY STATES IN EF?
+  There are five possible states where an entity can exist:
+  
+Added: It is a state in which an entity exists within the context but does not exist within the database. 
+		When the user invokes the SaveChanges method, DbContext usually generates an INSERT SQL query to insert the data into the database. 
+		Upon successful completion of the SaveChanges method, the entity's state changes to unchanged.
+Deleted: This state indicates that the entity is marked for deletion has not been removed from the database. 
+		Also, it indicates the existence of the entity in the database. 
+		When the user invokes the SaveChanges method, DbContext usually generates a DELETE SQL query to delete or remove the entity from the database. 
+	    Upon successful completion of the delete operation, DbContext removes the entity.
+Modified: When the entity is modified, its state becomes Modified. Also, it indicates the existence of the entity in the database. 
+		When the user invokes the SaveChanges method, DbContext usually generates an UPDATE SQL query to update the entity from the database. Upon successful completion of the SaveChanges method, the entity's state changes to unchanged.
+Unchanged: Since the context retrieved the entity's property values from the database, the values have not changed. This entity is ignored by SaveChanges.
+Detached: This state indicates that the entity is not tracked by the DbContext. If an entity was created or retrieved outside the domain of the current instance of DbContext, then its entity state will be Detached.
+The following diagram represents the different entity states in Entity Framework:	
+
+-----------------------------
+  
+Explain the term dbcontext and dbset.
+DbSet: An entity set is represented by a DbSet class that can be used for creating, reading, updating, and deleting operations on it. 
+Those DbSet type properties, which map to database tables and views, must be included in the context class (derived from DbContext).
+   
+public virtual DbSet<AdminDetail> AdminDetail { get; set; }
+
+DbContext: It is considered an essential class in EF API that bridges the gap between an entity or domain class and the database. 
+Communication with the database is its primary responsibility.
+
+public partial class ChartAuditModel : DbContext  

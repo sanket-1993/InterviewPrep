@@ -1,0 +1,38 @@
+Development is in Agile =>
+Custoer support is in Kanban => 2 members from team
+
+Injetion of data => window based service , injected files or metadata
+
+
+Audit flow =>either third party or an auditor. auditor of application.
+
+Appeal flow => between appeal judge and agent ref. If the agent is diagree with evaluation he can appeal . Agent will go to agent representative (Agent rep).
+ Agent ref will appeal on behalf of agent for rescore. judge will republish the evaluation. Agent will always acknowledge re published evaluation.
+ for every question he can appeal twice. but what if he still not satisfied with his current evaluation? original evaluator will republish evaluation
+
+Evaluation flow => Evaluator of application.Analytics engine will identify the call . it also search phrases
+Calibration flow => Supervising of Evaluations perfomed by evaluator.
+
+Self evaluation => while publishing agent also receives self evaluation
+2 parts => Evaluator will allow agent to self evaluation
+part 2 => Agent can self evaluate himself(senior angents)
+
+2 web portal=>
+main portal -> other users can login to both portals 
+evaluations portal -> Agents only allowed -> self evalutaion or assigned self evalutions-> they can only see there published evaluations.
+
+There is also coaching activity . only while doing evaluation not seperate functionality
+
+We are providing the generic fix which will work irrespective of any metadata field is disabled. All agents will be able to access the evaluation page.
+Now to find the impacted agents from the system, we are going to prepare a query which will fetch the impacted agents due to such disabled metadata fields.
+
+current rd - 18000
+12700 hapta + rd
+ 1000 akki
+12500 sapana
+ 1000 fund
+10000 dada 
+ 1000 SIP
+ 1000 disel
+ 
+ 

@@ -1,0 +1,130 @@
+Clustured vs non clusr=tured application.
+
+Types of filters in WebAPI?
+difference in IEnumerable and Iqueryable
+difference in Entity framework and Linq
+LINQ																		Entity Framework
+In order to operate, LINQ relies only on SQL Server Databases. 	||     In order to operate, the entity framework relies on several 
+																||	 databases including SQL Server, Oracle, MYSQL, DB2, etc.  
+																||	 
+It generates a .dbml to maintain the relationship.  	        ||     In this case, an .edmx file is generated first, 
+																||		then an .edmx file is maintained using three separate files-
+																||			.csdl, .msl, and .ssdl. 
+DataContext enables you to query data. 	                        ||     ObjectContext, DbContext, and EntitySQL can all be used 
+																||		to query data.
+Complex types are not supported.  	                            ||     Complex types are supported.   
+A database is not created from the model.	                    ||     A database can be created from the model. 
+Application is developed more quickly using SQL Server.	        ||     Applications are developed more quickly using SQL Server and 
+																||		other databases like MYSQL, Oracle, DB2, etc. 
+It consists of a tightly coupled mechanism. 	                ||     It consists of a loosely coupled mechanism.  
+Only one-to-one mappings are allowed. 	                        ||     One-to-one, one-to-many & many-to-many mappings are allowed.  
+It displays rapid development.	                                ||     It takes longer to develop than LINQ, but it provides more 
+																||		capabilities. 
+																
+Abstraction vs interface
+types of constructors
+---------------------------------
+Advantages of entity framework.
+	- With its excellent prototypes, it is possible to write object-oriented programs.  
+	- By allowing auto-migration, it is simple to create a database or modify it.   
+	- It simplifies the developer's job by reducing the code length with the help of alternate commands.   
+	- It reduces development time, development cost, and provides auto-generated code.   
+	- A unique syntax (LINQ / Yoda) is provided for all object queries, whether they are databases or not.  
+	- It enables the mapping of multiple conceptual models to a single storage schema. 
+	- Business objects can be mapped easily (with drag & drop tables).
+----------------------------------
+Disadvantages of entity framework.
+
+	- If the developer does not use raw SQL codes, things can become complicated sometimes.   
+	- It is a slower form of the Object Relational Mapper.   
+	- For a big domain model, it's not ideal.  
+	- Some RDMS do not offer this feature.   
+	- EF's main drawback is its lazy loading   
+	- This requires a non-traditional approach to handling data that isn't available for every database.  
+	- Since the data migration functionality is weak, it isn't fully effective in practice.
+----------------------------------
+
+Features of entity framework.
+
+Cross-Platform: It is lightweight, extensible, open-source, and can be used on Windows, Linux, and Mac.
+Querying: It allows us to retrieve data from underlying databases using LINQ queries, 
+	       which are then transformed into database-specific query languages.
+Modeling: EDMs (Entity Data Models) are typically created based on POCOs (Plain Old CLR Objects), 
+			which are entities with get/set properties of different types.
+			This model is used when querying and saving entity data to the underlying database.	
+Saving: Upon calling the "SaveChanges()" method, EF executes the INSERT, UPDATE, and DELETE commands to the database based 
+			on the changes made to entities. "SaveChangesAsync()" is another asynchronous method provided by EF.	
+Transaction: EF's transaction management capabilities automate the querying and saving of data. 
+			Furthermore, you can customize the way that transactions are managed.
+Caching: First-level caching of entities is supported out of the box in the EF. Repeated queries will retrieve data 
+			from the cache rather than the database in this case.	
+
+----------------------------------
+Entity framework approaches
+
+Code First Approach: The Code First approach primarily uses classes to create the model and its relations, 
+					which are then used to create a database. This way, developers can work in an object-oriented manner 
+					without considering the database structure. 
+					By following this model, developers first write POCO classes and then use these classes to create the database.
+					Code First is the method used by most developers using Domain-Driven Design (DDD).
+Model First Approach: In contrast, the Model First approach uses ORM to build model classes and their relationships. 
+					Following the successful creation of the model classes and relationships, the physical database is created 
+					using these models.
+Database-First Approach: In Entity Framework, Database First approach is used to build entity models based on existing databases 
+					and reduce the amount of code required. By using this approach, domain and context classes can be created based 
+					on existing classes
+
+----------------------------------	
+What are different entity states in EF?
+
+There are five possible states where an entity can exist:
+
+Added: It is a state in which an entity exists within the context but does not exist within the database. 
+		When the user invokes the SaveChanges method, DbContext usually generates an INSERT SQL query to 
+		insert the data into the database. Upon successful completion of the SaveChanges method, 
+		the entity's state changes to unchanged
+		
+		DbContext.ReportGroup.Add(reportGroup);
+		DbContext.SaveChanges()
+		
+		
+Deleted: This state indicates that the entity is marked for deletion has not been removed from the database. 
+		Also, it indicates the existence of the entity in the database. When the user invokes the SaveChanges method, 
+		DbContext usually generates a DELETE SQL query to delete or remove the entity from the database. 
+		Upon successful completion of the delete operation, DbContext removes the entity.
+		remove/removerange
+		
+Modified: When the entity is modified, its state becomes Modified. Also, it indicates the existence of the entity in the database. 
+	When the user invokes the SaveChanges method, DbContext usually generates an UPDATE SQL query to update the entity from 
+	the database. Upon successful completion of the SaveChanges method, the entity's state changes to unchanged.
+	
+		categoryDetail.Name = reportCategoryModel.CategoryName;
+        unitOfWork.DbContext.SaveChanges();
+	
+Unchanged: Since the context retrieved the entity's property values from the database, the values have not changed. 
+			This entity is ignored by SaveChanges.
+Detached: This state indicates that the entity is not tracked by the DbContext. 
+		If an entity was created or retrieved outside the domain of the current instance of DbContext, 
+		then its entity state will be Detached.
+
+--------------------------------
+Difference between ADO.NET and EF
+
+A few data layer codes are created by Ado.Net that Entity Framework doesn't create.
+Entity Framework, unlike ADO.Net, generates code for intermediate layers, data access layers, and mappings automatically.
+	This results in a reduction in development time.
+On a performance basis, ADO.Net is more efficient and faster than Entity Framework
+
+--------------------------------
+
+different routing techniques
+diff between dispose and finalize method.
+Formatters in webAPI
+difference between primary and unique key
+Explain Authentication.
+Why WebAPI?
+Difference between WebAPI and WCF
+
+
+Why webAPI?
+Dependency injection

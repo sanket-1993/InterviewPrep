@@ -1,0 +1,8 @@
+How do we achieve Security in server/client side?
+what is middleware in microservices? Types of middlewares?
+What is CSP?
+What is difference between unique/primary?
+clustured index/non custrured index.
+Azure functions 
+
+top OWASP 10

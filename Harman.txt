@@ -1,0 +1,23 @@
+How do you reflect column change in entity framework?
+
+The "Update Model from Database" is hard/slow to use and is prone to errors. It generates other stuff that you probably don't want/need. 
+So manually adding the column that you need will work better. I suggest you do it outside the VS editor since depending on 
+how many models/tables, it can be very slow opening the file in VS.
+
+So in Windows Exlorer, right-click on the *.edmx file and open with Notepad (or Notepad++/Textpad).
+
+Search for the text <EntityType Name="YourTableNameToAddColumn">.
+
+Add the property <Property Name="YourNewColumnName" Type="varchar" MaxLength="64" />
+
+Search for the text <MappingFragment StoreEntitySet="YourTableNameToAddColumn">
+
+Add mapping to the new column <ScalarProperty Name="YourNewColumnName" ColumnName="YourNewColumnName"/>
+
+Save the *.edmx file
+
+
+
+Advantages of dot net core..
+
+How do you call SP in EF?

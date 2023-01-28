@@ -1,0 +1,52 @@
+The Open Web Application Security Project (OWASP) is a non-profit foundation dedicated to improving the security of software. 
+OWASP operates under an ‘open community’ model, where anyone can participate in and contribute to projects, events, online chats, 
+and more.
+
+1.Injection. A code injection occurs when invalid data is sent by an attacker into a web application. 
+	The attacker’s intent in doing so is to make the application do something it was not designed to do.
+	
+Example: SQL injection is one of the most common injection flaws found in applications. SQL injection flaws 
+		 -=can be caused by use of untrusted data by an application when constructing a vulnerable SQL call.
+
+2.Denial of service - large number of anonymous request received on server. Server gets slow and unresponding due to handling of multiple
+request.
+
+3.Cross-Site Scripting (XSS). XSS attacks occur when an application includes untrusted data on a webpage. 
+Attackers inject client-side scripts into this webpage.
+
+Example: Untrusted data in an application allow for an attacker to ‘steal a user session’ and gain access to the system.
+
+4.Cross site request forgery (CSRF), also known as XSRF, Sea Surf or Session Riding, is an attack that 
+tricks a web browser into executing an unwanted action in an application to which a user is logged in.
+
+CSRFs are typically conducted using malicious social engineering, such as an email or link that tricks the victim into sending a 
+forged request to a server. As the unsuspecting user is authenticated by their application at the time of the attack, it’s impossible 
+to distinguish a legitimate request from a forged one.
+
+For example, a typical GET request for a $100 bank transfer might look like:
+
+GET http://netbank.com/transfer.do?acct=PersonB&amount=$100 HTTP/1.1
+
+A hacker can modify this script so it results in a $100 transfer to their own account. 
+Now the malicious request might look like:
+
+GET http://netbank.com/transfer.do?acct=AttackerA&amount=$100 HTTP/1.1
+
+A bad actor can embed the request into an innocent looking hyperlink:
+
+<a href="http://netbank.com/transfer.do?acct=AttackerA&amount=$100">Read more!</a>
+
+Next, he can distribute the hyperlink via email to a large number of bank customers. 
+Those who click on the link while logged into their bank account will unintentionally initiate the $100 transfer.
+
+Note that if the bank’s website is only using POST requests, it’s impossible to frame malicious requests using a <a> href tag. 
+However, the attack could be delivered in a <form> tag with automatic execution of the embedded JavaScript.
+
+<body onload="document.forms[0].submit()">
+   <form action="http://netbank.com/transfer.do" method="POST">
+     <input type="hidden" name="acct" value="AttackerA"/>
+     <input type="hidden" name="amount" value="$100"/>
+     <input type="submit" value="View my pictures!"/>
+   </form>
+ </body>
+

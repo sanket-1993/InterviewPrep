@@ -1,0 +1,37 @@
+Boxing														Unboxing
+It convert value type into an object type.					It convert an object type into value type.
+Boxing is an implicit conversion process.					Unboxing is the explicit conversion process.
+Here, the value stored on the stack copied to the object    Here, the object stored on the heap memory copied to the value stored on 
+stored on the heap memory.									the stack .
+
+int i = 25;													int i = 25;	
+Object obj = i;												Object obj = i;
+															int j = (int)obj;
+
+class vs object
+
+Class																			Object
+Class is a blueprint or template from which objects are created.		Object is an instance of a class.					
+Class is a group of similar objects.									Object is a real world entity such as pen, laptop,  
+																			mobile, bed, keyboard, mouse, chair etc.	
+Class is a logical entity.												Object is a physical entity.						
+Class is declared using class keyword e.g.								Object is created through new keyword mainly e.g.   
+class Student{}															Student s1=new Student();						
+Class is declared once.													Object is created many times as per requirement.	
+Class doesn't allocated memory when it is created.						Object allocates memory when it is created.			
+
+
+Static class
+
+It can only have static members.
+It cannot have instance members as static class instance cannot be created.
+It is a sealed class.
+As static class is sealed, so no class can inherit from a static class.
+We cannot create instance of static class that's the reason we cannot have instance members in static class, as static means shared so one copy of the class is shared to all.
+Static class also cannot inherit from other classes.
+
+Sealed class
+
+Sealed class can be instantiated.
+It can inherit from other classes.
+It cannot be inherited.

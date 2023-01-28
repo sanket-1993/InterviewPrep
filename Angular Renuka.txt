@@ -1,0 +1,441 @@
+What is closure?
+
+A closure is a function that remembers its outer variables and can access them.
+
+difference between component and directive
+	- Directives add behaviour to an existing DOM element or an existing component instance
+	- Write a component when you want to create a reusable set of DOM elements of UI with custom behaviour. 
+	- Write a directive when you want to write reusable behaviour to supplement existing DOM elements.
+------------------------------------------
+How many components can be present per DOM element
+	- In angular life cycle hook every component is destroyed when new component load.
+------------------------------------------	
+How many Directives can be present per DOM elmt
+	- Many directives can be used per DOM element.
+-------------------------------------
+
+Which decorator is used to create component/directive
+
+@Component({
+	selector:'',
+	template/templateURLs:'',
+	styleUrls:'',
+	encapsulation:
+})
+
+@Directive({
+	selector: "[logOnClick]",
+    hostListeners: {
+        'click': 'onClick()',
+    },
+})
+
+-------------------------------------
+What is module
+In Angular, a module is a mechanism to group components, directives, pipes and services that are related, 
+in such a way that can be combined with other modules to create an application.
+------------------------------------
+To create a module which decorator is used ?
+
+ @NgModule({
+	delcarations:[],
+	imports:[],
+	providers:[],
+	entryComponents:[]
+ })
+------------------------------------
+What are five important options which is present under @NgModule decorator & what it means
+Imports,exports, declarations, bootstrap, providers,entryComponents
+
+entryComponents: 
+An entry component is any component that Angular loads imperatively, 
+(which means you’re not referencing it in the template), by type. You specify an entry component by bootstrapping it in an NgModule, 
+or including it in a routing definition.
+
+So this means that any component you have in the bootstrap array, or have defined in a route, is immediately an entryComponent. 
+This is because you do not reference these inside any template. 
+This prevents the compiler to treeshake these components out of the module.
+
+bootstrap:
+A bootstrapped component is an entry component that Angular loads into the DOM during the bootstrap process (application launch). 
+Other entry components are loaded dynamically by other means, such as with the router.
+
+Though these two mechanisms account for most entry components, if your app happens to bootstrap or dynamically load a component 
+by type imperatively, you must add it to entryComponents explicitly.
+-------------------------------------
+What is difference between entryComponents and bootstrap?
+-------------------------------------
+What is lazy loading ? How many modules are present in your project ? 
+inside app.module.ts
+
+const route = [
+    {
+        path: 'xo',
+        loadChildren: () => import('./xo/xo.module').then(module => module.XoModule)
+    }
+]
+
+inside xo.routing.module.ts
+
+const route =[
+path: '',
+        component: XoComponent,
+        canActivate: [XoRouteGuardService],
+		children: [
+		{
+                path: 'project-admin',
+                canActivate: [XoRouteGuardService],
+                data: {
+                    title: 'Project Administration',
+                    access: XORouteAccess.ProjectAccess
+                } as RouteDataOptions,
+                loadChildren: () => import('./xo-project-admin/xo-project-admin.module').then(module => module.XoProjectAdminModule)
+            }
+		]
+]
+
+------------------------------------------------------
+How do you pass data/use components from one module to another module ?
+
+use service at root level .. dont include it in peovider array else you will have new instance of service.
+
+
+------------------------------------------------------
+
+Are you aware about lifecycle hooks ? which one you have used in your projects
+
+Angular offers eight lifecycle hooks to allow you to tap into lifecycle of directive or components as they are created, 
+	updated and destroyed.
+	
+Angular calls these hooks methods in following order --
+
+1.ngOnChanges - Called after input and output binding value change.
+2.ngOnInit - Called once component is initailized.
+3.ngDoCheck - Called immediately after ngOnChanges() on every change detection run, and immediately after ngOnInit() on the first run.
+4.ngAfterContentInit - Called after component content initailized.
+5.ngAfterContentChecked - Called after every check of component content
+6.ngAfterViewInit -Called after component's and child's views has been initailized
+7.ngAfterViewChecked -called every time after components and childs views has been checked.\
+8.ngOnDestry - called just before component or directive is destroyed
+------------------------------------------------------
+difference between constructor and ngOninit, purpose of NgOndestroy,
+
+The main difference between constructor and ngOnInit is that ngOnInit is lifecycle hook and runs after constructor.
+Component interpolated template and input initial values aren't available in constructor, but they are available in ngOnInit
+Constructor is used mainly for DI and ngOnInit used for Async operations and datat binding. async ngOnInit{await service.data();}
+difference between ngOnChanges & ngDoCheck
+
+purpose of NgOndestroy -
+
+Cleanup just before Angular destroys the directive or component. 
+Unsubscribe Observables and detach event handlers to avoid memory leaks.
+------------------------------------------------------
+Which one gets called first ngOninit or ngOnChanges?
+First ngOnChanges will be called then after first ngOnChanges ngOnInit will be called.
+------------------------------------------------------
+How many bindings you have used in you projects
+
+Interpolation {{}}
+Event ()
+Two-way [()]
+--------------------------------------
+What is the purpose of [(ngModel)]
+
+The ngModel directive binds an input,select, textarea (or custom form control) to a property on the scope
+It performs two way binding.
+
+Decorators ? 
+An Angular Decorator is a function, using which we attach metadata to a class, method, accessor, property, or parameter. 
+We apply the decorator using the form @expression, where expression is the name of the decorator.
+
+There are four main types of angular decorators:
+
+	- Class decorators, such as @Component, @Directive, @NgModule, @Injectable and @Pipe
+	- Property decorators for properties inside classes, such as @Input, @Output, @ViewChild & @ViewChildren.
+	- Method decorators for methods inside classes, such as @HostListener
+	- Parameter decorators for parameters inside class constructors, such as @Inject, @Host
+
+	
+What is the syntax/command to create class/pipe/enum/directive/module/service ?
+export enum Event {} 
+
+@Pipe({
+    name: 'timeOffset'
+})
+export class TimeOffsetPipe implements PipeTransform {
+
+    public transform(value: number): string {
+	}
+}
+
+@Directive({
+    selector: '[nxContextMenuToggle]',
+})
+export class XOContextMenuDirective implements OnInit, OnDestroy {
+}
+
+@Injectable({
+	providedIn: 'root'
+})
+
+providedIn: 'root' specifies that Angular should provide the service in the root injector.
+providedIn: UserModule
+
+@ngModule({
+	exports:[],
+	imports:[],
+	declarations:[],
+	providers:[],
+	bootstrap:[],
+	entryComponents:[]
+})
+
+-----------------------------------
+
+How do you pass data from one component to other
+generally if there is no strcturing between then then use pub-sub model
+Parent to child ? @Input() 
+Child to parent ? @Output()
+Sibling components - One child to parent then parent to another child.. Or Viewchild but viewchild allowed in ngAfterViewInit hook
+If there is no connection between components -> use behavour subject
+-----------------------------------
+Dependency injection ?
+
+Angular's DI framework provides dependencies to a class upon instantiation. 
+Use Angular DI to increase flexibility and modularity in your applications.
+
+The @Injectable() decorator specifies that Angular can use this class in the DI system. 
+The metadata, providedIn: 'root', means that the HeroService is visible throughout the application.
+
+Injecting services
+
+To inject a dependency in a component's constructor(), supply a constructor argument with the dependency type
+
+We can user one service in another.
+----------------------------------
+How do you use service ? What is the purpose of service ?
+----------------------------------
+What is observables ? 
+
+Observables provide support for data sharing between publishers and subscribers in an angular application. 
+	It is referred to as a better technique for event handling, asynchronous programming, and handling multiple 
+	values as compared to techniques like promises.
+
+A special feature of Observables is that it can only be accessed by a consumer who subscribes to it i.e A function 
+	for publishing values is defined, but it is not executed by the subscribed consumer (it can be any component) only 
+	via which the customer can receive notifications till the function runs or till they subscribed.
+
+An observable can deliver multiple values of any type. The API for receiving values is the same in any condition and the setup 
+	and the logic are both handled by the observable. Rest thing is only about subscribing and unsubscribing the information required.
+	
+What is an observer ? 
+
+Observers: To handle receiving observable messages, we need an observable interface which consists of 
+callback methods with respect to the messages by observables.
+	next: It is a handler for each message by observable, it may be called zero or more times after execution starts.
+	error: It is a handler for each error message. An error stops execution of the observable instance.
+	complete: It is a handles in which the completion of observable execution is notified.
+---------------------------------	
+What is subscribing?
+
+To execute the observable you have created and begin receiving notifications, you call its subscribe() method, passing an observer. 
+This is a JavaScript object that defines the handlers for the notifications you receive. 
+The subscribe() call returns a Subscription object that has an unsubscribe() method, which you call to stop receiving notifications.
+---------------------------------
+difference between promise & observable
+
+Observables																				||		Promises
+Emit multiple values over a period of time.												||	Emit a single value at a time.
+Are lazy: they’re not executed until we subscribe to them using the subscribe() method.	||	Are not lazy: execute immediately after creation.
+Have subscriptions that are cancellable using the unsubscribe() method,                 ||
+which stops the listener from receiving further values.	                                ||
+																						||	Are not cancellable.
+Provide the map for forEach, filter, reduce, retry, and retryWhen operators.			||	Don’t provide any operations.
+Deliver errors to the subscribers.															Push errors to the child promises.
+
+Multicasting ? 
+------------------------------------------
+What is the purpose of *ngIf ? what is the difference between display:none & *ngIf
+
+display:none; will remove the DOM elements visual style / physical space from the DOM, Not completely the element itself. 
+Which can be replaced with the attribute [Hide] in angular.
+
+whereas *ngIf is a angular builtin directive which and *ngIf if false will remove the element from the DOM.
+------------------------------------------------
+What happens if you use script tag inside template
+<div><script>alert(‘ dangerous ’)</script></div>
+How to inject dynamic script in angular
+Interpolation ? can we use (==,+=,-=, new, ++,--, |, &) inside template expression/interpolation
+------------------------------------------------
+What are pipes?
+They are a simple way to transform values in an Angular template
+
+Custom pipe ? difference between pure & impure pipe ?
+A pure pipe is only called when Angular detects a change in the value or the parameters passed to a pipe. 
+An impure pipe is called for every change detection cycle no matter whether the value or parameter(s) changes.
+
+------------------------------------------------
+What is bootstrapping module
+How do you perform error handling ?
+What are dynamic components
+
+-----------------------------------------------
+Purpose of wildcard route?
+
+The Wildcard Route is basically used in Angular Application to handle the invalid URLs. 
+Whenever the user enter some invalid URL or if you have deleted some existing URL from your application, then by default 404 page 
+not found error page is displayed. In such scenarios instead of showing the default error page, if you also show a custom error page 
+and this is possible by using the Angular Wildcard Route.
+
+A Wildcard route has a path consisting of two asterisks (**). It matches every URL, the router will select this route 
+if it can’t match a route earlier in the configuration. A Wildcard Route can navigate to a custom component or can redirect 
+to an existing route. The syntax to use Wildcard Route is given below.
+
+{
+	path:'**',component:CustomErrorComponent
+}
+
+What should be the Order of Angular Routes?
+The order of the routes is very important. When matching routes find, the angular router uses first-match wins strategy. 
+So more specific routes should be placed above less specific routes. 
+So, Routes with a static path should be placed first, followed by the empty path route, that matches the default route. 
+THE WILDCARD ROUTE SHOULD BE THE LAST ROUTE IN YOUR ROUTER CONFIGURATION
+-----------------------------------------------
+Do I always need a routing module?
+No, the Routing Module is a design choice. You can skip routing Module (for example, AppRoutingModule) when the configuration is simple
+and merge the routing configuration directly into the companion module (for example, AppModule). But it is recommended 
+when the configuration is complex and includes specialized guard and resolver services.
+----------------------------------------------
+Compilation types ? JIT?AOT? What is the default compilation type? Difference between them ? Why do we need a compilation process ?
+
+			JIT											|| AOT
+JIT downloads the compiler and compiles code exactly 	|| AOT has already complied with the code while building your application, 
+before Displaying in the browser.						|| so it doesn’t have to compile at runtime.
+														|| 
+Loading in JIT is slower than the AOT because it 		|| Loading in AOT is much quicker than the JIT because it 
+needs to compile your application at runtime.			|| already has compiled your code at build time.
+														|| 
+JIT is more suitable for development mode.				|| AOT is much suitable in the case of Production mode.
+														|| 
+Bundle size is higher compare to AOT.					|| Bundle size optimized in AOT, in results AOT bundle size 
+														|| is half the size of JIT bundles.
+														|| 
+ng build OR ng serve									|| ng build --aot OR ng serve --aot
+														|| 
+You can catch template binding error at display time.	|| You can catch the template error at building your application.														
+-----------------------------------------------
+How to declare nullable variables in angular ? user?:User
+----------------------------------------------- 
+What is a service worker in angular?
+ Service workers augment the traditional web deployment model and empower applications to deliver a user experience with the reliability
+ and performance on par with code that is written to run on your operating system and hardware.
+ 
+ Adding a service worker to an Angular application is one of the steps for turning an application into a Progressive Web App 
+ (also known as a PWA).
+ 
+ At its simplest, a service worker is a script that runs in the web browser and manages caching for an application.
+ 
+ Service workers function as a network proxy. They intercept all outgoing HTTP requests made by the application 
+ and can choose how to respond to them. 
+ For example, they can query a local cache and deliver a cached response if one is available.
+ 
+ Unlike the other scripts that make up an application, such as the Angular application bundle, the service worker 
+ is preserved after the user closes the tab. The next time that browser loads the application, the service worker loads first, 
+ and can intercept every request for resources to load the application. 
+ If the service worker is designed to do so, it can completely satisfy the loading of the application, 
+ WITHOUT THE NEED FOR THE NETWORK.
+ 
+ Step 1 
+ Add the @angular/service-worker package to our application by using npm install command
+ 
+ Step 2
+ We need to enable the service worker to build support in the CLI.
+ 
+ "serviceworker":true
+ "ngswConfigPath":"ngsw-config.json"
+ 
+ Step 3 
+ Imports and register the service worker in the app module.
+ 
+ @NgModule({
+	import:[
+	ServiceWorkerModule.register('ngsw-config.json',{enabled: environame.production})
+	]
+ })
+ 
+ Step 4 
+	Create the service worker configuration file called ngsw-config.json which mainly specify 
+	all caching behaviors and other setting related to the service worker.
+	
+	
+	{  
+	"$schema": "./node_modules/@angular/service-worker/config/schema.json",  
+	"index": "/index.html",  
+	"assetGroups": [  
+		{  
+		"name": "app",  
+		"installMode": "prefetch",  
+		"resources": {  
+			"files": [  
+			"/favicon.ico",  
+			"/index.html",  
+			"/manifest.webmanifest",  
+			"/*.css",  
+			"/*.js"  
+			]  
+		}  
+		},  
+		{  
+		"name": "assets",  
+		"installMode": "lazy",  
+		"updateMode": "prefetch",  
+		"resources": {  
+			"files": [  
+			"/assets/**",  
+			"/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"  
+			]  
+		}  
+		}  
+	]  
+	}  
+----------------------------------------------- 
+What is an angular router ?
+
+Router outlet?
+
+ - Router-outlet in Angular works as a placeholder which is used to load the different components dynamically based on the 
+ - activated component or current route state. Navigation can be done using router-outlet directive and the activated 
+ - component will take place inside the router-outlet to load its content.
+ 
+ <router-outlet></router-outlet>  
+Router links?
+
+ - RouterLink is a built-in Angular Directive that lets you link to specific routes in your app. In the SPA
+ - (single-page application), you change what the user sees by showing or hiding portions of the display that 
+ - correspond to particular components, rather than going out to the server to get a new page.
+ 
+ If there is a static link, you can use the directive as follows: <a routerLink=”/customer/21″>link to cust component</a>
+
+Active router links?
+Router events?
+
+	 - NavigationStart: Navigation starts.
+	 - RouteConfigLoadStart: Before the router lazy loads a route configuration.
+	 - RouteConfigLoadEnd: After a route has been lazy loaded.
+	 - RoutesRecognized: When the router parses the URL and the routes are recognized.
+	 - GuardsCheckStart: When the router begins the guards phase of routing.
+	 - ChildActivationStart: When the router begins activating a route's children.
+	 - ActivationStart: When the router begins activating a route.
+	 - GuardsCheckEnd: When the router finishes the guards phase of routing successfully.
+	 - ResolveStart: When the router begins the resolve phase of routing.
+	 - ResolveEnd: When the router finishes the resolve phase of routing successfully.
+	 - ChildActivationEnd: When the router finishes activating a route's children.
+	 - ActivationEnd: When the router finishes activating a route.
+	 - NavigationEnd: When navigation ends successfully.
+	 - NavigationCancel: When navigation is canceled.
+	 - NavigationError: When navigation fails due to an unexpected error.
+	 - Scroll: When the user scrolls.
+------------------------------------------------
+What is angular material
+What is HTTPClient , HTTP interceptor ?
+security & performance

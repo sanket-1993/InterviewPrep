@@ -1,0 +1,414 @@
+DDL – Data Definition Language
+	CREATE: This command is used to create the database or its objects (like table, index, function, views, store procedure, and triggers).
+	DROP: This command is used to delete objects from the database.
+	ALTER: This is used to alter the structure of the database.
+	TRUNCATE: This is used to remove all records from a table, including all spaces allocated for the records are removed.
+
+DQl – Data Query Language
+ SELECT: It is used to retrieve data from the database.
+
+DML – Data Manipulation Language
+ INSERT : It is used to insert data into a table.
+ UPDATE: It is used to update existing data within a table.
+ DELETE : It is used to delete records from a database table.
+ LOCK: Table control concurrency.
+
+DCL – Data Control Language
+ COMMIT: Commits a Transaction.
+ ROLLBACK: Rollbacks a transaction in case of any error occurs.
+-----------------------------
+Types of joins in SQL
+
+A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+(INNER) JOIN: Returns records that have matching values in both tables
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+
+LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+
+SELECT *
+FROM Orders
+LEFT JOIN Customers
+on Orders.CustomerId = Customer.CustomerID;
+
+RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+
+SELECT *
+FROM Orders
+Right JOIN Customers
+on Orders.CustomerId = Customer.CustomerID;
+
+FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+
+---------------------------
+Union will supress the duplicate values
+Unionall will not supress the dupliacate values
+take care about column number, sequence and datatypes of columns.
+
+-----------------------------
+
+Delete 
+	- DELETE is a DML command.
+	- We can use where clause with DELETE to filter & delete specific records.
+	- The DELETE command is used to remove rows from a table based on WHERE condition.
+	- It maintains the log, so it slower than TRUNCATE.
+	- The DELETE statement removes rows one at a time and records an entry in the transaction log for each deleted row.
+	- It does not delete schema of table
+
+DROP
+	- The DROP command removes a table from the database.
+	- All the tables' rows, indexes, and privileges will also be removed.
+	- No DML triggers will be fired.
+	- The operation cannot be rolled back.
+	- DROP and TRUNCATE are DDL commands, whereas DELETE is a DML command.
+	- DELETE operations can be rolled back (undone), while DROP and TRUNCATE operations cannot be rolled back
+	
+TRUNCATE
+	- The Truncate command resets the AUTO_INCREMENT counters on the table.
+	- The structure or schema of the table is preserved
+-----------------------------
+Global vs local temp table
+-----------------------------
+WHAT IS VIEW? HOW TO CREATE VIEW? ARE DML STATMENTS ALLOWED INSIDE VIEW?
+
+A VIEW in SQL Server is like a virtual table that contains data from one or multiple tables. 
+It does not hold any data and does not exist physically in the database. 
+Similar to a SQL table, the view name should be unique in a database. 
+It contains a set of predefined SQL queries to fetch data from the database
+
+ - We can use DML operation on a single table only
+ - VIEW should not contain Group By, Having, Distinct clauses
+ - We cannot use a subquery in a VIEW in SQL Server
+ - We cannot use Set operators in a SQL VIEW
+-----------------------------
+What is CTE. Syntax of CTE
+
+The common table expression (CTE) is a temporary named result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE 
+statement. You can also use a CTE in a CREATE a view, as part of the view’s SELECT query.
+
+Using the CTE – 
+We can define CTEs by adding a WITH clause directly before SELECT, INSERT, UPDATE, DELETE, or MERGE statement. The WITH clause 
+can include one or more CTEs separated by commas. The following syntax can be followed: 
+
+WITH
+  cteReports (EmpID, FirstName, LastName, MgrID, EmpLevel)
+  AS
+  (
+    SELECT EmployeeID, FirstName, LastName, ManagerID, 1
+    FROM Employees
+    WHERE ManagerID IS NULL
+    UNION ALL
+    SELECT e.EmployeeID, e.FirstName, e.LastName, e.ManagerID, 
+      r.EmpLevel + 1
+    FROM Employees e
+      INNER JOIN cteReports r
+        ON e.ManagerID = r.EmpID
+  )
+  
+  select * from cteReports
+  
+  Thus CTEs can be a useful tool when you need to generate temporary result sets that can be accessed in a SELECT, INSERT, UPDATE, 
+  DELETE, or MERGE statement.
+-----------------------------
+DIFFERENCE BETWEEN SP AND SQL FUNCTION
+
+ 1-The function must return a value but in Stored Procedure it is optional. Even a procedure can return zero or n values.
+ 2-Functions can have only input parameters for it whereas Procedures can have input or output parameters.
+ 3-Functions can be called from Procedure whereas Procedures cannot be called from a Function.
+ 5-The procedure allows SELECT as well as DML(INSERT/UPDATE/DELETE) statement in it whereas Function allows only SELECT statement in it.
+ 6-Procedures cannot be utilized in a SELECT statement whereas Function can be embedded in a SELECT statement.
+ 7-Stored Procedures cannot be used in the SQL statements anywhere in the WHERE/HAVING/SELECT section whereas Function can be.
+ 8-Functions that return tables can be treated as another rowset. This can be used in JOINs with other tables.
+ 9-Inline Function can be though of as views that take parameters and can be used in JOINs and other Rowset operations.
+ 10-An exception can be handled by try-catch block in a Procedure whereas try-catch block cannot be used in a Function.
+ 11-We can use Transactions in Procedure whereas we can't use Transactions in Function.
+-----------------------------
+SQL FUNCTION ->SYNTAX, TYPES
+
+Function is a database object in SQL Server. Basically, it is a set of SQL statements that accept only input parameters, perform actions 
+and return the result. 
+Function can return an only single value or a table
+
+01.System Defined Function
+	These functions are defined by SQL Server for a different purpose. We have two types of system defined function in SQL Server
+
+	1.Scalar Function
+		Scalar functions operate on a single value and return a single value. Below is the list of some useful SQL Server 
+			Scalar functions.
+		abs(12.3),rand(10),ltrim(),trim(),rtrim(),upper(),lower()
+		
+	2.Aggregate Function
+		Aggregate functions operate on a collection of values and return a single value. Below is the list of some useful SQL Server 
+		Aggregate functions.	
+		min(),max(),sum(),avg()
+		
+02.User Defined Function
+	These functions are created by the user in the system database or in a user-defined database. We three types of user-defined functions.
+
+	1.Scalar Function
+		The user-defined scalar function also returns a single value as a result of actions performed by the function. 
+		We return any datatype value from a function.
+		
+	2.Inline Table-Valued Function
+		The user-defined inline table-valued function returns a table variable as a result of actions performed by the function. 
+		The value of the table variable should be derived from a single SELECT statement.
+		
+		Create function fnGetEmployee() returns Table
+		As
+		return (Select * from Employee) 
+		
+		Select * from fnGetEmployee() 
+		
+	3.Multi-Statement Table-Valued Function
+		A user-defined multi-statement table-valued function returns a table variable as a result of actions performed by the function. 
+		In this, a table variable must be explicitly declared and defined whose value can be derived from multiple SQL statements.
+		
+		Create function fnGetMulEmployee()
+		returns @Emp Table
+		(
+		EmpID int, 
+		FirstName varchar(50),
+		Salary int
+		)
+-----------------------------
+Why SET NOCOUNT ON;?
+
+SET NOCOUNT ON is a set statement which prevents the message which shows the number of rows affected by T-SQL query statements. 
+This is used within stored procedures and triggers to avoid showing the affected rows message.
+----------------------------- 
+Trigger in SQL server
+
+Triggers are database object. Basically, these are a special type of stored procedure that is automatically fired/executed when 
+a DDL or DML command statement related to the trigger is executed. 
+Triggers are used to assess/evaluate data before or after data modification using DDL and DML statements. 
+These are also used to preserve data integrity, to control server operations, to audit a server and to implement business logic 
+or business rule.
+
+Types of Triggers
+1.DDL Triggers
+	
+	In SQL Server we can create triggers on DDL statements (like CREATE, ALTER, and DROP) and certain system-defined stored 
+	procedures that perform DDL-like operations.
+	
+	Example: If you are going to execute the CREATE LOGIN statement or the sp_addlogin stored procedure to create login user, 
+	then both these can execute/fire a DDL trigger that you can create on CREATE_LOGIN event of SQL Server
+	
+	We can use only FOR/AFTER clause in DDL triggers not INSTEAD OF clause means we can make only After Trigger on DDL statements.
+	
+2.DML Triggers
+	
+	n SQL Server we can create triggers on DML statements (like INSERT, UPDATE, and DELETE) and stored procedures that perform 
+	DML-like operations. DML Triggers are of two types
+	
+	1.After Trigger (using FOR/AFTER CLAUSE)
+	
+	This type of trigger fires after SQL Server finishes the execution of the action successfully that fired it.
+	
+	2.Instead of Trigger (using INSTEAD OF CLAUSE)
+	
+	This type of trigger fires before SQL Server starts the execution of the action that fired it. This differs from the AFTER trigger,
+	which fires after the action that caused it to fire. We can have an INSTEAD OF insert/update/delete trigger on a table that 
+	successfully executed but does not include the actual insert/update/delete to the table.
+	
+3.CLR Triggers
+
+	CLR triggers are a special type of triggers based on the CLR (Common Language Runtime) in .net framework. CLR integration of 
+	triggers has been introduced with SQL Server 2008 and allows for triggers to be coded in one of .NET languages like C#, 
+	Visual Basic and F#.
+	
+Syntax for Trigger
+
+CREATE TRIGGER trigger_name
+ON {table|view} 
+[WITH ENCRYPTION|EXECUTE AS] 
+{FOR|AFTER|INSTEAD OF} {[CREATE|ALTER|DROP|INSERT|UPDATE|DELETE ]} 
+[NOT FOR REPLICATION] 
+AS 
+sql_statement [1...n ] 
+	
+-----------------------------
+WRITE A SQL QUERY TO FIND THIRD LARGEST SALARY FROM AN EMPLOYEE TABLE
+CONSIDER THAT MULTIPLE EMPLOYEES CAN HAVE SAME SALARY.
+
+SELECT * FROM Employee WHERE sal = 
+         (
+            SELECT MIN(sal) FROM Employee 
+            WHERE  sal IN (
+                                 SELECT DISTINCT TOP N
+                                     sal FROM Employee 
+                                         ORDER BY sal DESC
+                             )
+        )
+-----------------------------
+
+CLUSTURE INDEXES
+
+Indexes are used to speed-up query process in SQL Server, resulting in high performance. 
+They are similar to textbook indexes. In textbooks, if you need to go to a particular chapter, you go to the index, 
+	find the page number of the chapter and go directly to that page. 
+Without indexes, the process of finding your desired chapter would have been very slow.
+
+The same applies to indexes in databases. Without indexes, a DBMS has to go through all the records in the table in order 
+	to retrieve the desired results. 
+This process is called table-scanning and is extremely slow. 
+On the other hand, if you create indexes, the database goes to that index first and then retrieves the corresponding table records directly.
+
+CLUSTERED INDEX
+A clustered index defines the order in which data is physically stored in a table. 
+Table data can be sorted in only way, therefore, there can be only one clustered index per table. 
+In SQL Server, the primary key constraint automatically creates a clustered index on that particular column.
+
+CREATE CLUSTERED INDEX IX_tblStudent_Gender_Score
+ON student(gender ASC, total_score DESC)
+
+The above script creates a clustered index named “IX_tblStudent_Gender_Score” on the student table. 
+This index is created on the “gender” and “total_score” columns. 
+An index that is created on more than one column is called “composite index”.
+
+This sorted data structure is called a B-tree (balanced tree). 
+B-tree structure enables us to find the queried rows faster to using the sorted key value(s). 
+Table data can be sorted physically in only one direction for this reason we can define only one clustered index per table. 
+
+Root level: The top level of the B-tree is called as root level. The root level is the starting point of the data searching
+Intermediate level: This level provides a connection between root and leaf levels. 
+					SQL Server does not create an intermediate level when the amount of data rows are too small
+Leaf Level: This level is the lowest level of the clustered index and all records are stored at this level
+
+NON-CLUSTERED INDEXES
+
+A non-clustered index doesn’t sort the physical data inside the table. In fact, a non-clustered index is stored at one place and 
+ table data is stored in another place. 
+This is similar to a textbook where the book content is located in one place and the index is located in another. 
+This allows for more than one non-clustered index per table.
+
+It is important to mention here that inside the table the data will be sorted by a clustered index. 
+However, inside the non-clustered index data is stored in the specified order. 
+The index contains column values on which the index is created and the address of the record that the column value belongs to.
+
+When a query is issued against a column on which the index is created, the database will first go to the index and look for the 
+ address of the corresponding row in the table. 
+It will then go to that row address and fetch other column values. 
+It is due to this additional step that non-clustered indexes are slower than clustered indexes.
+
+CREATE NONCLUSTERED INDEX IX_tblStudent_Name
+ON student(name ASC)
+
+The above script creates a non-clustered index on the “name” column of the student table. The index sorts by name in ascending order. 
+As we said earlier, the table data and index will be stored in different places. 
+The table records will be sorted by a clustered index if there is one. 
+The index will be sorted according to its definition and will be stored separately from the table.
+
+Conclusion
+From the discussion we find following differences between clustered and non-clustered indexes.
+
+ 1.There can be only one clustered index per table. However, you can create multiple non-clustered indexes on a single table.
+ 2.Clustered indexes only sort tables. Therefore, they do not consume extra storage. 
+	Non-clustered indexes are stored in a separate place from the actual table claiming more storage space.
+ 3.Clustered indexes are faster than non-clustered indexes since they don’t involve any extra lookup step.
+ 
+ ---------------------------------------------
+ 
+ DIFFERENCE between primary and unique key
+ 
+ Primary key														Unique Key
+ Used to serve as a unique identifier for each row in a table.	 || Uniquely determines a row which isn’t primary key.
+ Cannot accept NULL values.										 || Can accepts only one NULL value for column.
+ Only one primary key											 || More than one unique key
+ Creates clustered index										 || Creates non-clustered index
+ 
+ --------------------------------------------
+ Normalization in SQL server
+ 
+ Normalization is the process to eliminate data redundancy and enhance data integrity in the table. 
+ Normalization also helps to organize the data in the database. It is a multi-step process that sets the data into tabular form 
+ and removes the duplicated data from the relational tables.
+ 
+ So why is this required? without Normalization in SQL, we may face many issues such as
+
+ Insertion anomaly: It occurs when we cannot insert data to the table without the presence of another attribute
+ Update anomaly:  It is a data inconsistency that results from data redundancy and a partial update of data.
+ Deletion Anomaly: It occurs when certain attributes are lost because of the deletion of other attributes.
+ 
+ 1NF,2NF,3NF,4NF
+ 
+ 1NF -
+  - A table is referred to as being in its First Normal Form if atomicity of the table is 1.
+  - Here, atomicity states that a single cell cannot hold multiple values. It must hold only a single-valued attribute.
+  
+  roll no | name    | course   |   age
+  1			Sanket		c/c++	  30                  wrong course column
+  
+  roll no | name    | course   |   age
+  1			Sanket		c   	   30   
+  1			Sanket		c++	       30  
+  
+  
+  Second Normal Form (2NF)
+  - The first condition for the table to be in Second Normal Form is that the table has to be in First Normal Form. 
+  - The table should not possess partial dependency. The partial dependency here means the proper subset of the candidate key 
+	should give a non-prime attribute.
+	
+	This table has a composite primary key emp_id, dept_id. The non-key attribute is dept_name.
+	In this case, dept_name only depends on dept_Id, which is only part of the primary key. Therefore, this table does not 
+	satisfy the second Normal Form.
+	
+	emp_id  | dept_id | dept_name
+	1             1       R&D
+	2             2		 Finance	
+	3             1		 R&D	
+	
+	
+	To bring this table to Second Normal Form, we need to break the table into two parts. Which will give us the below tables:
+	
+	let sptil emple table in 2 tables
+	
+	emp_id   |  dept_Id
+	1			1
+	2			1
+	3			2
+	
+	dept_Id  |  dept_name
+	1			R&D
+	2			Finance	
+	
+	Now, in the table, the column dept_name is fully dependent on the primary key of that table, which is Department ID.
+	
+	Third Normal From (3NF)
+	
+	- The same rule applies as before i.e, the table has to be in 2NF before proceeding to 3NF. 
+	- The other condition is there should be no transitive dependency for non-prime attributes.
+	- That means non-prime attributes (which doesn’t form a candidate key) should not be dependent on other non-prime attributes 
+	  in a given table.
+	  
+	  emp_id | emp_name  | dept_Id  | dept_name  | phone 
+		1      Sanket			1		R&D         735001010
+		2		Aniket			2		Finance     2222
+		3		Rahul			1		R&D			33333
+		4		Raj				2		Finance		99999
+		
+	In the above table, emp_id determines dept_Id, and dept_Id determines dept_name. Therefore, emp_id determines dept_name via 
+	dept_Id. This implies that we have a transitive functional dependency, and this structure does not satisfy the third normal form.
+
+
+------------------
+Magic table in sql server
+
+Magic tables are the temporary logical tables that are created by the SQL server whenever there are insertion or deletion or update
+( D.M.L)  operations. The recently performed operation on the rows gets stored in magic tables automatically. 
+These are not physical table but they are just temporary internal tables. 
+These magic tables can’t be retrieved directly, 
+we need to use triggers to access these magic tables to get the deleted and inserted rows.
+
+----------------------
+
+DIFFERENCE between varchar and nvarchar
+
+---------------------
+Find 3rd and 5th highest Salary
+
+
+	
+  
+ 

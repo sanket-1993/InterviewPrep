@@ -1,0 +1,302 @@
+WHAT ARE THE RESTFUL SERVICES?
+
+Ans. REST stands for the Representational State Transfer. This term is coined by the Roy Fielding in 2000. 
+		RESTful is an Architectural style for creating loosely couple applications over the HTTP. 
+		In order to make API to be RESTful, it has to adhere the around 6 constraints that are mentioned below:
+	1. Client and Server Separation: Server and Clients are clearly isolated in the RESTful services.
+	2. Stateless: REST Architecture is based on the HTTP Protocol and the server response can be cached by the clients, 
+		but no client context would be stored on the server.
+	3. Uniform Interface: Allows a limited set of operation defined using the HTTP Verbs. For eg: GET, PUT, POST, Delete etc.
+	4. Cacheable: RESTful architecture allows the response to be cached or not. Caching improves performance and scalability.
+	5. Code-On-Demand
+	6. Layered System
+
+----------------------------------------
+WHAT IS THE DIFFERENCE BETWEEN UNDER-POSTING AND OVER-POSTING IN ASP.NET WEB API?
+UNDER-POSTING: happens when the client sends out some properties of the model, Just for an example, Suppose we have an employee class 
+			which have three properties i.e. EmployeeID, Name, Age. 
+			The client only sends out EmployeeID and Name then JSON Formatter assigns a default value for the Age i.e. Zero.
+
+Over-Posting: A client can also send more data than your model expected. In this case, JSON formatter or XML Formatter simply ignores that value. 
+			When a client sends more data than expected in binding, then this process is known as Over-Posting.
+			
+----------------------------------------
+DIFFERENCE BETWEEN HTTPPATCH AND HTTPPUT
+
+The HTTP PUT request method creates a new resource or replaces a representation of the target resource with the request payload.
+
+The HTTP PATCH request method applies partial modifications to a resource. 
+A PATCH request is considered a set of instructions on how to modify a resource.		
+
+----------------------------------------
+WHAT IS THE REQUEST HEADER?
+
+Request header is used to provide additional information related to the request. 
+For example, if a client wants a response in JSON format, then the client needs 
+to set the Accept request header to application/json or if want a response in XML format than Accept request header to application/xml.
+
+-----------------------------------------
+HOW TO PROVIDE AN ALIAS NAME FOR WEB API ACTION?
+
+We can provide an alias name to Web API Action by using “ActionName” Attribute.
+[ActionName("GetEmployee")] 
+public IHttpActionResult Get()
+{ return Ok(); }
+-----------------------------------------
+WHAT IS PARAMETER BINDING IN ASP.NET WEB API?
+
+When Web API calls a method on a controller, it must set the values for the parameters, 
+this particular process is known as Parameter Binding. 
+By Default, Web API uses the below rules in order to bind the parameter:
+	1. FromUri: If the parameter is of “Simple” type, then Web API tries to get the value from the URI. 
+				Simple Type includes.Net Primitive type like int, double etc., DateTime, TimeSpan, GUID, string, any type which can be converted from the string type.
+	2. FromBody: If the parameter is of “Complex” type, then Web API will try to bind the values from the message body.
+----------------------------------------
+CAN WE DECLARE FROMBODY ATTRIBUTE ON MULTIPLE PARAMETERS?
+
+We can only declare only one FromBody attribute on the parameter to read data from the request body. 
+The reason behind that is that the request body might be stored in the non-buffered stream that can be read only once.
+----------------------------------------
+WHAT IS CONTENT NEGOTIATION IN WEB API?
+
+Content Negotiation is the process of selecting the best representation for a given response 
+when there are multiple representations available. 
+Two main headers which are responsible for the Content Negotiation are:
+	1. Content-Type - The content-type header tells the server about the data, the server is going to receive from the client 
+	
+	2. Accept header - header is used by HTTP clients to tell the server which type of content they expect/prefer as response. 
+		Content-type can be used both by clients and servers to identify the format of the data in their request (client) 
+		or response (server) and, therefore, help the other part interpret correctly the information.
+		
+----------------------------------------
+ 
+WHAT IS THE ROLE OF QUALITY FACTOR IN WEB API REQUEST?
+
+If multiple Accept headers are passed in a Web API request, then the match which has a higher value of quality factor wins means content negotiator tries to provide the response in the format which has a high quality factor.
+Accept: application/xml;q=0.8,application/json;q=0.7
+-----------------------------------------
+WHAT IS THE USE OF AUTHORIZE ATTRIBUTE?
+
+ Web API provided a built-in authorization filter, i.e. Authorize Attribute. 
+ This filter checks whether the user is authenticated or not. 
+ If not, the user will see 401 Unauthorized HTTP Status Code.
+-------------------------------------
+WHAT IS BASIC HTTP AUTHENTICATION?
+
+Basic HTTP Authentication is a mechanism, where the user is authenticated through the service in which the client pass username and password in the HTTP Authorization request headers. 
+The credentials are formatted as the string “username:password”, based encoded.
+
+-------------------------------------
+HOW TO CREATE A CUSTOM BASIC AUTHENTICATION WEB API FILTER?
+
+Add a class BasicAuthenticationAttribute (you can create a class of any name) and inherit AuthorizationFilterAttribute class which provided details for the authorization filter. 
+Override OnAuthorization method in the BasicAuthenticationAttribute class which will be called when a process request Authorization.
+
+	public class BasicAuthenticationAttribute: AuthorizationFilterAttribute { 
+	public override void OnAuthorization(HttpActionContext actionContext) 
+	{ //if no Authorization headers present in the Request Header, then return UnAuthorized Status Code 
+	if (actionContext.Request.Headers.Authorization==null) 
+	{ actionContext.Response =actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized); } 
+	else 
+	{ //Get Authorization Token from the Request Headers string authenticationToken = actionContext.Request.Headers.Authorization.Parameter; 
+	//Decode Base64Encoded Authorization token to the string
+	string decodedAuthToken =Encoding.UTF8.GetString(Convert.FromBase64String(authenticationToken)); 
+	if (decodedAuthToken.Split(':').Count()==2) 
+	{ 
+	//Extracting UserName and Password from the decoded token string[] 
+	userNamePassword= decodedAuthToken.Split(':'); 
+	string userName = userNamePassword[0]; 
+	string password = userNamePassword[1]; 
+	ValidateUser objValidateUser = new ValidateUser(); 
+	if (objValidateUser.Login(userName,password)) 
+	{ //If your application performs any custom authentication logic, you must set the principal 
+	Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(userName), null); 
+	if (HttpContext.Current!=null) { HttpContext.Current.User = Thread.CurrentPrincipal; } } 
+	else { actionContext.Response =actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized); } }
+	else { actionContext.Response =actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized); 
+	} } } 
+	}
+	
+	[BasicAuthentication]
+    [RoutePrefix("api/test")]
+    public class TestController : ApiController
+---------------------------------------
+HOW TO ENABLE CORS IN WEB API PROJECT?
+
+Browser security prevents a web page from making requests to a different domain than the one that served the web page.
+Angular -> test.com webapi -> jest.azurewebsites.net 
+This restriction is called the same-origin policy. 
+The same-origin policy prevents a malicious site from reading sensitive data from another site. 
+Sometimes, you might want to allow other sites to make cross-origin requests to your app.
+
+First, add the reference for the CORS from the NuGet Package manager. 
+Right click on References, and click on Manage NuGet Package Manager and search for the CORS.
+
+After that add the below lines in the WebApiConfig.cs file to enable CORS.
+
+EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*"); 
+config.EnableCors(cors);
+
+EnableCorsAttribute Class accepts origin, headers, methods, etc. in the constructor of the class. 
+Wildcard value “*” in origin means that any origin, header, methods are allowed. 
+In the request header, we can check the Origin of the request and in the response header, we can check the Access-Control Header.
+We can only allow CORS for the particular domain, method, as well as header.
+ 
+[EnableCors("*","*","*")] //alternate to above
+
+Use [DisableCors] attribute to the action in order to disable CORS for an action method. 
+---------------------------------------
+HOW TO DEFINE A ROUTE IN ASP.NET MVC?
+
+Web API supports two types of routing i.e.
+	1. Convention-based routing
+	2. Attribute Routing
+
+When we create a Web API project, it will add WebApiConfig.cs class in App_Start folder with the default route values as shown below:
+
+public static void Register(HttpConfiguration config) 
+	{ 
+			config.Routes.MapHttpRoute(
+                name: "version1",
+                routeTemplate: "api/{controller}V1/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+            name: "version2",
+            routeTemplate: "api1/{controller}V2/{action}/{id}",
+            defaults: new { id = RouteParameter.Optional }
+            );
+	}
+	
+	Each entry in the routing table contains a route template. 
+	The Default route template for the Web API project is “api/{controller}/{id}.
+	As we can see in the template that “api” is a string literal path segment 
+	(provided by default in the route in order to prevent collision with the ASP.NET MVC Routing. 
+	If don’t like this default literal path then you can change the default route template) and {controller” and {id} are placeholder variables. 
+	When Web API receives an HTTP request, it will try to match the URI with one of the route template defined in the routing table. 
+	In case, if not matched with any of the route templates then the client receives 404 Not found error.
+	
+-----------------------------------------
+Attribute Routing
+
+Inside webapiconfig.cs add
+
+config.MapHttpAttributeRoutes();
+
+[RoutePrefix("api/{controller}")]
+
+[Route("getAllUsers")]
+
+-----------------------------------------
+Routing constraints
+
+[Route("users/{id:int}")]
+	
+Optional URI Parameters and Default Values
+
+public class BooksController : ApiController
+{
+    [Route("api/books/locale/{lcid:int?}")]
+    public IEnumerable<Book> GetBooksByLocale(int lcid = 1033) { ... }
+}
+
+In this example, /api/books/locale/1033 and /api/books/locale return the same resource.
+
+Alternatively, you can specify a default value inside the route template, as follows:
+
+public class BooksController : ApiController
+{
+    [Route("api/books/locale/{lcid:int=1033}")]
+    public IEnumerable<Book> GetBooksByLocale(int lcid) { ... }
+}
+-----------------------------------------
+CAN WE USE BOTH CONVENTION BASED ROUTING AND ATTRIBUTE ROUTING IN THE SAME WEB API APPLICATION?
+
+Ans. Yes, we can use convention-based routing and attribute routing in the same Web API project without any issue.
+-----------------------------------------
+
+In How many ways we can do Web API Versioning?
+Ans. We can do Web API Versioning in the following ways:
+1. URI
+2. Query String Parameter
+3. Custom Header Parameter
+4. Accept Header Parameter
+
+------------------------------------------
+CAN WE HAVE METHOD WITH SAME NAME IN SINGLE 
+Yes but we need to override the methods--
+public IHttpActionResult GetCollection()
+public IHttpActionResult GetCollection1([FromUri] int a)
+
+if 2 apis have same route then there is exception of MULTIPLE ACTIONS WERE FOUND THAT MATCH THE REQUEST:
+
+--------------------------------------------
+FILTERS IN WEBAPI
+
+Web API includes filters to add extra logic before or after action method executes. 
+Filters can be used to provide cross-cutting features such as logging, exception handling, performance measurement, 
+authentication and authorization.
+
+Filters are actually attributes that can be applied on the Web API controller or one or more action methods. 
+Every filter attribute class must implement IFilter interface included in System.Web.Http.Filters namespace. 
+However, System.Web.Http.Filters includes other interfaces and classes that can be used to create filter for specific purpose.
+
+Added custom filter below
+
+Method 1
+
+public class LogAttribute : ActionFilterAttribute
+{
+	public LogAttribute()
+	{
+
+	}
+
+	public override void OnActionExecuting(HttpActionContext actionContext)
+	{
+		Trace.WriteLine(string.Format("Action Method {0} executing at {1}", actionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), "Web API Logs");
+	}
+
+	public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+	{
+		Trace.WriteLine(string.Format("Action Method {0} executed at {1}", actionExecutedContext.ActionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), "Web API Logs");
+	}
+}
+
+Method 2
+
+public class Log1Attribute : AuthorizationFilterAttribute, IFilter/IActionFilter
+{
+	public Log1Attribute()
+	{
+
+	}
+
+	public Task<HttpResponseMessage> ExecuteActionFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
+	{
+		Trace.WriteLine(string.Format("Action Method {0} executing at {1}", actionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), "Web API Logs");
+
+		var result = continuation();
+
+		result.Wait();
+
+		Trace.WriteLine(string.Format("Action Method {0} executed at {1}", actionContext.ActionDescriptor.ActionName, DateTime.Now.ToShortDateString()), "Web API Logs");
+
+		return result;
+	}
+}
+
+----
+Flow of webAPI Auth 2 - 
+
+------------------------
+What is API Throttling?
+
+API throttling is the process of limiting the number of API requests a user can make in a certain period. 
+An application programming interface (API) functions as a gateway between a user and a software application. 
+For example, when a user clicks the post button on social media, the button click triggers an API call.
+
+
+
+

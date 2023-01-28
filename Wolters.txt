@@ -1,0 +1,148 @@
+class Animal{
+	public void MakeSound(AnimalType type)
+	{
+		switch(type)
+		{
+			case "Dog": console.log("Bark")
+						return;
+			case "cat": console.log("meow")
+						return;
+			case "Duck": console.log("kweek")
+						return;
+			case "Lion": console.log("roar")
+						return;
+			default:
+					console.log("No sound");
+		}
+	}
+}
+Which principal it voilates of design principle and remedy to remove--
+----------------------------
+Brief into userself and work on recent project
+----------------------------
+Diff bet const and readonly
+Diff bet Ienumerable and IQueryble
+Diff types of OWASP10 attacks
+How do you identify error on IIS
+How detailed error shown from IIS
+check console for errors
+difference bet abstract class and interface
+difference bet disposable and finalize
+managed code vs unmanaged code
+clustured index vs non clustured index
+repository design pattern.
+
+Application Pool on IIS
+
+Microsoft says: "An Internet Information Services (IIS) application pool is a grouping of URLs that is routed to one or more worker 
+processes. Because application pools define a set of Web applications that share one or more worker processes, 
+they provide a convenient way to administer a set of Web sites and applications and their corresponding worker processes.
+-------------------------
+Difference between TypeScript and JavaScript:
+
+TypeScript is known as an Object-oriented programming language whereas JavaScript is a scripting language.
+TypeScript has a feature known as Static typing but JavaScript does not support this feature. int sum(number1:Number,number2:number):Number {return number1+number2}
+TypeScript supports Interfaces but JavaScript does not.
+
+Advantages of using TypeScript over JavaScript 
+
+	- TypeScript always points out the compilation errors at the time of development (pre-compilation). Because of this getting runtime
+		errors is less likely, whereas JavaScript is an interpreted language.
+	- TypeScript supports static/strong typing. This means that type correctness can be checked at compile time. 
+		This feature is not available in JavaScript.
+	- TypeScript is nothing but JavaScript and some additional features i.e. ES6 features. It may not be supported in your 
+		target browser but the TypeScript compiler can compile the .ts files into ES3, ES4, and ES5 also.
+		
+Disadvantages of using TypeScript over JavaScript
+
+	- Generally, TypeScript takes time to compile the code.		
+--------------------------------
+difference between value types and reference types
+
+A Value Type stores its contents in memory allocated on the stack. When you created a Value Type, a single space in memory is allocated
+ to store the value and that variable directly holds a value. If you assign it to another variable, the value is copied directly 
+ and both variables work independently. Predefined datatypes, structures, enums are also value types, and work in the same way. 
+ Value types can be created at compile time and Stored in stack memory, because of this, Garbage collector can't access the stack.
+ 
+ Reference Types are used by a reference which holds a reference (address) to the object but not the object itself. 
+ Because reference types represent the address of the variable rather than the data itself, 
+ assigning a reference variable to another doesn't copy the data. 
+ Instead it creates a second copy of the reference, which refers to the same location of the heap as the original value. 
+ Reference Type variables are stored in a different area of memory called the heap. 
+ This means that when a reference type variable is no longer used, it can be marked for garbage collection.
+ Examples of reference types are Classes, Objects, Arrays, Indexers, Interfaces etc.
+ 
+ 
+ public interface IComposer : IDisposable
+ {
+	T Compose<T>();
+ }
+ 
+ public sealed class Composer : IComposer
+ {
+	public T Compose<T>()
+    {
+        return this.Compose<T>(null);
+    }
+	
+	public T Compose<T>(String contractName)
+    {
+        this.InitializeContainer();
+
+        try
+        {
+            return this.container.GetExportedValue<T>(contractName);
+        }
+        catch (ReflectionTypeLoadException exception)
+        {
+            throw WrapReflectionTypeLoadErrors(exception);
+        }
+    }
+	
+	private void InitializeContainer()
+    {
+        CompositionGate.CheckIfCompositionAllowed();
+
+        if (this.container == null)
+        {
+            this.container = new CompositionContainer(this.catalog, true);
+        }
+    }
+ }
+ 
+ public abstract class BaseApiController<THandler> : ApiController
+ {
+	protected THandler Handler { get; set; } = CompositionService.Composer.Compose<THandler>();
+ }
+ 
+ [RoutePrefix("media")]
+ public class MediaDataController : BaseApiController<IMediaDataRequestHandler>
+ {
+	[Route("metadata/{sourceMediaId}/{metadataFieldName}")] 
+    [HttpGet]
+    [ResponseType(typeof(MediaMetadataResponseModel))]
+    public async Task<HttpResponseMessage> RequestMetadataBySourceMediaId(Int32 sourceMediaId, String metadataFieldName)
+    {
+        var response = await this.Handler.HandleRequestMetadataBySourceMediaId(sourceMediaId, metadataFieldName);
+
+        return await this.OkAsync(response);
+    }
+ }
+ 
+  public interface IMediaDataRequestHandler
+  {
+	Task<MediaMetadataResponseModel> HandleRequestMetadataBySourceMediaId(Int32 sourceMediaId, String metadataFieldName);
+  }
+  
+  [Export(typeof(IMediaDataRequestHandler))]
+  public class MediaDataRequestHandler : IMediaDataRequestHandler
+  {
+   public Task<MediaMetadataResponseModel> HandleRequestMetadataBySourceMediaId(Int32 sourceMediaId, String metadataFieldName)
+        {
+            return Task.Run(
+                () =>
+                {
+					//Business Logic here
+				}
+		}		
+  }

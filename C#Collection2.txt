@@ -1,0 +1,392 @@
+Let’s say I have two classes, Motorcycle and Car. Each class has a property named power (integer). 
+I want to create a single function that will accept an object of either class and print the power figure. How can I do it?
+
+     class vehicle{
+        public vehicle(int power){this.Power = power;}
+        public int Power { get; set; }
+
+        public virtual int getPower(){return this.Power;}
+    }
+
+    class MotorCycle : vehicle{
+        public MotorCycle(int power) : base(power){}
+        public override int getPower(){return this.Power;}
+    }
+
+    class Car : vehicle{
+        public Car(int power) : base(power){}
+        public override int getPower(){return this.Power;}
+    }
+Client -->
+        static int GetPower(vehicle vehicle)
+        {
+            return vehicle.getPower();
+        }
+-------------------------------
+List<int> a = new List<int>() { 10, 22, 33, 44 };
+int s = a.Where(o => o == 2).FirstOrDefault();
+s is 0
+
+List<string> a = new List<string>() { "Sanket","Salunkhe"};
+string s = a.Where(o => o == "S").FirstOrDefault();
+s is null
+
+-------------------------------
+WHAT IS USE OF NEW KEYWORD -
+
+We can divide the use of the "new" keyword into the following uses:
+	1.An operator
+	2.A modifier
+	3.A constraint
+
+1.new as an operator
+ 
+	It is used to create objects and invoke a constructor.
+	Using the "new" operator, we can create an object or instantiate an object, in other words with the "new" operator 
+	we can invoke a constructor
+	
+	Initialize a class:
+	var author = new Author();
+	
+	Initialize collections:
+	var authors = new List<Author>(); 
+	
+	Create an instance of anonymous types:
+	var authorAnonymous = from auth in authors  
+	select new { FullName = string.Format("{0} {1}", auth.FirstName, auth.LastName) };
+	
+	An important thing to notice is that with the use of the "new" operator we can invoke the default constructor of a value type.
+	Int32 num = new int();
+	
+2.new as a modifier
+	It hides a member that is inherited from a base class.
+	So, what does this mean?
+	It simply replaces the base class version.
+	What happens if I do not use "new"?
+	So, in this case your code runs perfectly with a compiler warning that you are hiding without using the "new" modifier.
+	There will be an error if you use both "new" and "override" on the same member.	
+	
+	public class BaseAuthor  
+	{  
+		public class Author  
+		{  
+			public virtual string FullName()  
+			{  
+			return string.Format("{0} {1}", FirstName, LastName);  
+			}  
+		}  
+	}  
+	public class DerivedAuthor:BaseAuthor  
+	{  
+		new public class Author  
+		{  
+			public virtual string FullName()  
+			{  
+			return string.Format("{0} {1}", FirstName, LastName);  
+			}  
+		}  
+	}
+	
+	Now, we can invoke the parent and derived classes as:
+	
+	Author = new Author();    
+    BaseAuthor.Author = new BaseAuthor.Author(); 
+	
+3."new" as a Constraint
+
+	It specifies that the GENERIC TYPE must have a public parameterless constructor. The "new" constraint cannot be used on an 
+	abstract type.
+
+	class ItemFactory<T>
+	{
+		public T GetNewItem()
+		{
+			return new T(); // error here => you cannot call the constructor because you don't know if T possess such constructor
+		}
+	}
+		
+	public class AuthorFactory<T> where T : new()
+    {
+        public T GetAuthor()
+        {
+            return new T();
+        }
+    }
+
+	var factoryAuth = new AuthorFactory<Author>();  
+	var objAuth = factoryAuth.GetAuthor();
+	
+-------------------------------
+GENERIC CLASS IN C#
+
+	Generic means the general form, not specific. In C#, generic means not specific to a particular data type.
+	A type parameter is a placeholder for a particular type specified when creating an instance of the generic type.
+	A generic type is declared by specifying a type parameter in an angle brackets after a type name, e.g. TypeName<T> where T is 
+	a type parameter.
+	
+	class DataStore<T>
+	{
+		public T Data { get; set; }
+	}
+	Above, the DataStore is a generic class. T is called type parameter, which can be used as a type of fields, properties, 
+	method parameters, return types, and delegates in the DataStore class. 
+	For example, Data is generic property because we have used a type parameter T as its type instead of the specific data type.
+	
+	Note - 
+	It is not required to use T as a type parameter. You can give any name to a type parameter. Generally, T is used when there is only one type parameter. 
+	It is recommended to use a more readable type parameter name as per requirement like TSession, TKey, TValue etc
+	
+	class KeyValuePair<TKey, TValue>
+	{
+		public TKey Key { get; set; }
+		public TValue Value { get; set; }
+	}
+	
+	client- 
+	DataStore<string> store = new DataStore<string>();
+	KeyValuePair<int, string> kvp1 = new KeyValuePair<int, string>();
+	
+	- A generic class increases the reusability. The more type parameters mean more reusable it becomes. 
+	  However, too much generalization makes code difficult to understand and maintain.
+    - A generic class can be a base class to other generic or non-generic classes or abstract classes.
+	- A generic class can be derived from other generic or non-generic interfaces, classes, or abstract classes.
+	- Generics are type-safe. You get compile-time errors if you try to use a different data type than the one specified in the definition.
+	- Generic has a performance advantage because it removes the possibilities of boxing and unboxing.
+-------------------------------
+DESIGN PRINCIPLE
+	Design principles provide high level guidelines to design better software applications. 
+	They do not provide implementation guidelines and are not bound to any programming language. 
+	The SOLID (SRP, OCP, LSP, ISP, DIP) principles are one of the most popular sets of design principles.
+
+	For example, the Single Responsibility Principle (SRP) suggests that a class should have only one reason to change. 
+	This is a high-level statement which we can keep in mind while designing or creating classes for our application. 
+	SRP does not provide specific implementation steps but it's up to you how you implement SRP in your application.
+
+DESIGN PATTERN
+	Design Pattern provides low-level solutions related to implementation, of commonly occurring object-oriented problems. 
+	In other words, design pattern suggests a specific implementation for the specific object-oriented programming problem. 
+	For example, if you want to create a class that can only have one object at a time, then you can use the Singleton design pattern which suggests the best way to create a class that can only have one object.
+
+	Design patterns are tested by others and are safe to follow, e.g. Gang of Four patterns: Abstract Factory, Factory, Singleton, Command, etc.
+-------------------------------
+REF VS OUT KEYWORDS
+
+The parameter or argument must be 									 || 	It is not compulsory to initialize a parameter or argument 
+initialized first before it is passed to ref.								before it is passed to an out.
+					 
+It is not required to assign or initialize the value of a parameter  ||     A called method is required to assign or initialize a value 
+(which is passed by ref) before returning to the calling method.	 || 	of a parameter (which is passed to an out) before returning to 
+																	 || 	the calling method.
+																	 ||	
+Passing a parameter value by Ref is useful                           ||      
+when the called method is also needed to modify the pass parameter.	 || 	Declaring a parameter to an out method is useful 
+																	 || 	when multiple values need to be returned from a function or method.
+It is not compulsory to initialize                                   || 
+a parameter value before using it in a calling method.				 || 	A parameter value must be initialized within the calling method
+																	 || 	before its use.
+When we use REF, data can be passed bi-directionally.				 || 	When we use OUT data is passed only in a unidirectional way 
+																	 || 	(from the called method to the caller method).	                                                                                
+
+Both ref and out are treated differently at run time and they are treated the same at compile time so methods cannot be overloaded 
+ if one method takes an argument as ref and the other takes an argument as an out.
+ 
+ there is no method overloading possible with ref and out keyword.
+
+-------------------------------
+ARE REF AND OUT ARE ALLOWED IN ASYN AWAIT?
+
+	No it will give compile time error
+	That's a limitation of the CLR. We chose to implement async methods in a similar way to iterator methods -- i.e. 
+	through the compiler transforming the method into a state-machine-object. 
+	The CLR has no safe way to store the address of an "out parameter" or "reference parameter" as a field of an object. 
+	The only way to have supported out-by-reference parameters would be if the async feature were done by a low-level CLR rewrite 
+	instead of a compiler-rewrite. 
+	We examined that approach, and it had a lot going for it, but it would ultimately have been so costly that it'd 
+	never have happened.
+------------------------------
+
+CONST VS READONLY
+
+const fields has to be initialized while declaration only, while readonly fields can be initialized at declaration or in the constructor.
+const variables can declared in methods ,while readonly fields cannot be declared in methods.
+const fields cannot be used with static modifier, while readonly fields can be used with static modifier.
+A const field is a compile-time constant, the readonly field can be used for run time constants.
+-----------------------------
+DIMOND PROBLEM 
+
+The "diamond problem" is an ambiguity that arises when two classes B and C inherit from A, and class D inherits from both B and C. 
+If there is a method in A that B and C have overridden, and D does not override it, then which class of the method does D inherit: 
+	that of B, or that of C? 
+So this is an ambiguity problem in multiple inheritances in c#. So that c# does not support multiple inheritances. 
+It also called an ambiguity problem in c#.
+ 
+Solution-
+use 3 different interfaces with A B C class
+implement multiple interfaces and provide respective defination. 
+ 
+-----------------------------
+Why method hiding->
+If we dont want to override method of base class.
+When reference and object are of derived class then only new method will be called.
+In case of upcasting one level overridden method gets called
+A a = new C();
+a.Method()  -> Class B method will be called -> 2nd level
+
+    public class A
+    {
+        public virtual void method()
+        {
+            Console.WriteLine("A");
+        }
+    }
+    public class B : A
+    {
+        public override void method()
+        {
+            Console.WriteLine("B");
+        }
+    }
+    public class C : B
+    {
+        public new void method()
+        {
+            Console.WriteLine("C");
+        }
+    }
+	
+		A ObjA = new A();
+		ObjA.method();
+
+		A ObjB = new B();
+		ObjB.method();
+
+		A objC = new C();
+		objC.method(); // calls method of B
+
+		//B objA = (B)new A(); //System.InvalidCastException
+		A a = new A();
+		B b = (B)a;
+		b.method();
+
+
+		C ObjC2 = new C();
+		ObjC2.method();
+
+		B objectA = (B)new A();  //System.InvalidCastException
+		objectA.method();
+
+		B ObjB1 = new B();
+		ObjB1.method();
+
+
+		A ObjC = new C();
+		ObjC.method();
+
+		C ObjC1 = new C();
+		ObjC1.method();
+------------------------------
+static sealed class Test //Not allowed both keyword at same time .. compile time error
+   static class cannot be marked sealed because it is made sealed by compiler by default.
+abstract sealed class Test //Not allowed both keyword at same time .. compile time error
+
+Static Class: Declared with Static keyword, methods in Static Class are also static along with variables of the class.
+			  This class cannot be instantiated, i.e we cannot have objects of this class. To access methods of this class, 
+			  you can directly use classname.method.
+			  Also this class cannot be inherited.
+			  Static classes cannot contain an instance constructor. However, they can contain a static constructor. 
+			  Static constructor gets called only once. 
+			  Non-static classes should also define a static constructor if the class contains static members that require 
+			  non-trivial initialization.
+			  Static classes are sealed and therefore cannot be inherited. They cannot inherit from any class except Object.
+			  A static class can be used as a convenient container for sets of methods that just operate on input parameters 
+			  and do not have to get or set any internal instance fields.
+
+Sealed Class: Declared with Sealed keyword, which enables this class to seal all its variables, methods and properties. 
+              No other class can inherit anything from this class or in other words, this class cannot be inherited. 
+			  But we can instantiate this class, i.e we can have any number of objects of a sealed class.
+			  Use - when you're designing a class library and want to restrict your classes not to be derived by developers, 
+			  you may want to use sealed classes.
+
+Abstract Class: Declared with abstract keyword, this class is primarily created as a Inheritable class.
+              An abstract class enables other classes to inherit from this class, but forbids to instantiate.
+			  One can inherit from an abstract class but we cannot create objects of an abstract class. 
+			  Abstract class can have abstract as well as non abstract methods. 
+			  Abstract methods are those which are not having method definition.
+
+
+One important point to remember is a non-static class can have static methods. But Static classes must have all members as Static.
+------------------------------
+WHAT IS THE DIFFERENCE BETWEEN DISPOSE AND FINALIZE METHOD?
+
+1.The method dispose() is defined in an interface IDisposable.                                                  || On the other hand, the method finalize() is defined in the class object.
+2.The method dispose() has to be manually invoked inside the code by a programmer,                              || while the method finalize is automatically invoked by the garbage collector before it destroys the object.
+3.The method dispose could be invoked anytime.                                                                  || whereas the method finalize is invoked by the garbage collector when it finds that that object has not been referenced for a long time.
+4.The method dispose() is implemented in a class after implementing the interface IDisposable.                  || The method finalize() has to be implemented only for unmanaged resources because the managed resources are automatically freed by the garbage collector.
+5.The access specifier of the method dispose() is public as it is defined in the interface IDisposable          || 
+and it would be implemented by the class that implements this interface hence, it should be public.             || On the other hand, the method finalize() has protected access specifier so that it should not be accessible to any member outside the class.
+6.The method dispose() is fast and frees the object instantly hence, it does not affects the performance cost.  || The method finalize() is slower and does not free the resources held by the object instantly.
+
+Conclusion
+It is suggested to use method dispose() over the method finalize() as it is faster than finalize. 
+Also, it could be called any time, when needed.
+------------------------------
+Difference between string and stringbuilder
+
+ String in system namespace
+ String is immutable, Immutable means if you create string object then you cannot modify it and It always create new object of 
+ string type in memory.
+ 
+ 1.It's a class used to handle strings.
+ 2.Here concatenation is used to combine two strings.
+ 3.String object is used to concatenate two strings.
+ 4.The first string is combined to the other string by creating a new copy in the memory as a string object, and then the old
+ string is deleted
+ 5.That is why  "Strings are immutable".
+ 6. Slower
+ Example
+ string strMyValue = "Hello Visitor";
+ // create a new string instance instead of changing the old one
+ strMyValue += "How Are";
+ strMyValue += "You ??";
+ 
+ Stringbuilder
+ in system.Text namespace
+ 
+ StringBuilder is mutable, means if create string builder object then you can perform any operation like insert, replace or append 
+  without creating new instance for every time.it will update string at one place in memory doesnt create new space in memory.
+ 1.It's a class used to handle strings.
+ 2.Here Append is used to combine two strings.
+ 3.String object is used to concatenate two strings.
+ 4.The StringBuilder doesn't create a new object in the memory but dynamically expands memory to accommodate the modified string.
+ 5.That is why  "Stringbuilder are mutable".
+ 6. StringBuilder performs faster than string when appending multiple string values.
+ Example
+ 
+ StringBuilder sbMyValue = new StringBuilder("");
+ sbMyValue.Append("Hello Visitor");
+ sbMyValue.Append("How Are You ??");
+ string strMyValue = sbMyValue.ToString();
+-------------------------------
+
+
+[HttpGet]
+[route("api")]
+public IAction getUest()
+{
+}
+
+app
+--------------------------------
+Why system.gc is there then need of using block
+--------------------------------
+select min(salary) from(
+select top 2 selary from emp order by salary desc)
+---------------------------------
+router ={
+
+}
+AuthGuard
+IsActive
+diff betwn promise and observable
+Token based authentication flow
+

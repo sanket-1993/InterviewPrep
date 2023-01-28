@@ -1,0 +1,10 @@
+Angular buidling blocks
+
+How to create service ?
+
+can we write 'providedIn':'root'
+
+difference between observable and promises
+
+What are pipes?Types of pipes?
+

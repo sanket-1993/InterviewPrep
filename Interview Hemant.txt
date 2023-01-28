@@ -1,0 +1,34 @@
+Architecture of .net
+CLR working
+ Action results return type
+ Life cycle of MVC
+ What is routing in MVC.
+ Viewbag, viewdata and tempdata difference
+ Filters in MVC
+ Attributes in MVC
+ Model level validation
+ Session in MVC
+ State management in MVC.
+ Oppos concept
+ Abstract class and interface class diff and real life sinario.
+ Solid design pattern
+ Factory pattern
+ Web API controller and MVC controller difference.
+ Web API and web services difference.
+ FirstorDefault and first difference (as single)
+ Take and skip use
+ Collection in c#
+ Quarable and enumerable difference
+ LINQ to object and LINQ to SQL
+ Benefit of entity over normal ADO .net
+
+C# .NET Questions
+
+1. What is Polymorphism? Types of Polymorphism?
+2. What are Abstraction and Encapsulation?
+3. What is the difference between Dispose and Finalize method?
+4. What is the difference between Interface and Abstract classes?
+5. What is the difference between IEnumerable and IQueryable interface?
+6. What is the difference between String and String Builder class?
+7. What is the difference between Const and ReadOnly keywords? 
+8. What is the difference between static class and sealed class in c#?

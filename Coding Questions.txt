@@ -1,0 +1,163 @@
+https://ankitsharmablogs.com/csharp-coding-questions-for-technical-interviews/
+
+How to idetify the string is palindrome or not and minimun number of characters to make it palindrom
+
+public static void Main()
+	{
+		String str = "aabx";
+		Boolean flag = false;
+		int cntr = 0;
+		for(int i = 0,j = str.Length-1; i < str.Length/2;i++,j--){
+			if(str[i] != str[j]){
+				flag = true;
+				cntr++;
+			}
+		}	
+		if(flag){
+			Console.WriteLine("String is not palindrom. To create palindrom it need to have minimum "+cntr+" characters should be altered");
+		}else{
+		     Console.WriteLine("String is palindrom");
+		}
+	}
+
+------------------------------------
+Get the count of each element in string 
+
+		string theString = "abcdefghaba";
+		var qry = theString.ToCharArray()
+            .GroupBy(c => c)
+            .Select(g => new {s = g.Key,Count =g.Count()});
+		
+		foreach(var i in qry)
+		{
+			Console.WriteLine(i.s+" "+i.Count);
+		};
+		
+-------------------------------------
+input "Sanket Maruti Salunkhe" 
+output - Salunkhe Maruti Sanket
+
+public static void Main()
+	{   
+		String str = "Sanket Maruti Salunkhe";
+		StringBuilder str1 = new StringBuilder();
+		int Start = str.Length-1, End = str.Length-1,i;
+			
+		while(Start > 0){
+			if(str[Start] == ' '){
+				i=Start+1;
+				
+				while(i <= End){
+					str1.Append(str[i]);
+					i++;
+				}
+				str1.Append(' ');
+				End = Start-1;
+			}		
+			Start--;
+		}
+		
+		for(i=0; i <= End;i++){
+			str1.Append(str[i]);
+		}	
+		Console.WriteLine(str1);
+	}		
+	
+-------------------------------------
+Reverse each string 
+i/p = "Sanket Salunkhe"    o/p - "teknaS ehknulaS"
+
+string str = "Sanket Salunkhe";
+		List<Char> charArray = new List<Char>();
+		StringBuilder str1 =  new StringBuilder();
+		for(int i = 0; i < str.Length ; i++)
+		{
+			if(str[i] == ' ' || i == str.Length-1){
+				charArray.Add(str[i]);
+				for(int j = charArray.Count-1;j >= 0; j--)
+				{
+					str1.Append(charArray[j]);
+				}
+				str1.Append(" ");
+				charArray = new List<Char>();
+			}
+			else
+			{
+				charArray.Add(str[i]);
+			}
+		}
+		
+		Console.WriteLine(str1);	
+		
+--------------------------------------
+
+Find each character count in string
+
+public static void Main()
+	{ 
+		String str = "Sssanket";	
+	    Dictionary<Char,int> dict = new Dictionary<Char,int>();		
+		foreach(var item in str){
+			if(!dict.ContainsKey(item)){
+				dict.Add(item,1);
+			}
+			else{
+				dict[item]++;
+			}
+		}		
+		foreach(var item in dict){
+			Console.WriteLine("{0} - {1}",item.Key,item.Value);
+		}
+	}
+
+OR
+
+public static void Main()
+	{ 
+		String str = "Sssa nket";	
+	    
+		var dict = str.ToCharArray().GroupBy(o => o).Where(o => !o.Contains(' ')).Select(o => new {Key= o.Key,Count= o.Count()});
+		
+		foreach(var item in dict)
+		{
+			Console.WriteLine("{0} - {1}",item.Key,item.Count);
+		}
+	}	
+
+--------------------------------------
+
+remove duplicate characters from string
+
+public static void Main()
+	{ 
+		String str = "Sssa nket";	
+	    String str2 = String.Empty;
+		
+		for(int i = 0; i<str.Length;i++)
+		{
+			if(!str2.Contains(str[i]))
+			{
+				str2+= str[i];
+			}
+		}
+		
+		Console.WriteLine(str2);
+	}		
+	
+	
+---------------------------------------
+All possible substrings inside string
+
+public static void Main()
+	{ String str = "abcd";
+		for (int i = 0; i < str.Length; ++i)  
+     {  
+         StringBuilder subString = new StringBuilder(str.Length - i);  
+         for (int j = i; j < str.Length; ++j)  
+         {  
+             subString.Append(str[j]);  
+             Console.WriteLine(subString + " ");  
+         }  
+     } 
+	}
+	

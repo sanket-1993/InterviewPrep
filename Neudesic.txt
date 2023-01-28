@@ -1,0 +1,18 @@
+gc.collect?
+
+Forces an immediate garbage collection of all generations.
+Use this method to try to reclaim all memory that is inaccessible. It performs a blocking garbage collection of all generations.
+
+All objects, regardless of how long they have been in memory, are considered for collection; however, objects that are referenced in 
+managed code are not collected. Use this method to force the system to try to reclaim the maximum amount of available memory.
+
+Managed vs unmanaged code
+Difference between fake and mock?
+
+Difference between RouthGuard and AuthGuard?
+gc.suppressFinalizer();
+code coverage tool in project
+code quality tool in project
+
+Static class vs singleton
+

@@ -1,0 +1,319 @@
+Non generic collections
+
+C# includes specialized classes that store series of values or objects are called collections.
+There are two types of collections available in C#: non-generic collections and generic collections.
+The System.Collections namespace contains the non-generic collection types.
+
+public class ArrayList : IList, ICollection, IEnumerable, ICloneable
+
+C# - ArrayList
+In C#, the ArrayList is a non-generic collection of objects whose size increases dynamically. 
+It is the same as Array except that its size increases dynamically.
+
+The ArrayList class implements the ILIST interface. So, elements can be accessed using indexer, in the same way as an array. 
+Index starts from zero and increases by one for each subsequent element.
+
+An explicit casting to the appropriate types is required, or use the var variable.
+An ArrayList can be used to add unknown data where you don't know the types and the size of the data.
+
+	ArrayList a1 = new ArrayList();
+    a1.Add(10);
+    a1.Add("Sanket");
+    a1.Add(12.3f);
+    a1.Add(12.2d);
+	
+	int firstElement = (int) a1[0]; //returns 1
+	string secondElement = (string) a1[1]; //returns "Bill"
+	
+ITERATE AN ARRAYLIST
+
+The ArrayList implements the IEnumerable interface that supports iteration of the collection types. 
+So, use the foreach and the for loop to iterate an ArrayList. 
+The Count property of an ArrayList returns the total number of elements in an ArrayList.
+
+Remove Elements
+
+arList.Remove(null); //Removes first occurance of null
+arList.RemoveAt(4); //Removes element at index 4
+arList.RemoveRange(0, 2);
+
+
+Methods	Description
+Add()/AddRange()		Add() method adds single elements at the end of ArrayList.
+AddRange() 				method adds all the elements from the specified collection into ArrayList.
+Insert()/InsertRange()	Insert() method insert a single elements at the specified index in ArrayList.
+InsertRange() 			method insert all the elements of the specified collection starting from specified index in ArrayList.
+Remove()/RemoveRange()	Remove() method removes the specified element from the ArrayList.
+RemoveRange() 			method removes a range of elements from the ArrayList.
+RemoveAt()				Removes the element at the specified index from the ArrayList.
+Sort()					Sorts entire elements of the ArrayList.
+Reverse()				Reverses the order of the elements in the entire ArrayList.
+Contains				Checks whether specified element exists in the ArrayList or not. Returns true if exists otherwise false.
+Clear					Removes all the elements in ArrayList.
+CopyTo					Copies all the elements or range of elements to compitible Array.
+GetRange				Returns specified number of elements from specified index from ArrayList.
+IndexOf					Search specified element and returns zero based index if found. Returns -1 if element not found.
+ToArray					Returns compitible array from an ArrayList.
+
+-------------------------------
+Sorted List
+
+	- In C#, SortedList is a collection of key/value pairs which are sorted according to keys. 
+	- By default, this collection sort the key/value pairs in ascending order. 
+	- It is of both generic and non-generic type of collection. 
+	- The generic SortedList is defined in System.Collections.Generic namespace whereas non-generic SortedList is defined under 
+      System.Collections namespace. 
+
+Important Points: 
+ 
+
+ - The SortedList class implements the IEnumerable, ICollection, IDictionary and ICloneable interfaces.
+ - In SortedList, an element can be accessed by its key or by its index.
+ - A SortedList object internally maintains two arrays to store the elements of the list, 
+	i.e, one array for the keys and another array for the associated values.
+ - Here, a key cannot be null, but a value can be.
+ - The capacity of a SortedList object is the number of key/value pairs it can hold.
+ - In SortedList, duplicate keys are not allowed.
+ - In SortedList, you can store values of the same type and of the different types due to the non-generic collection. 
+	If you use a generic SortedList in your program, then it is necessary that the type of the values should be the same.
+ - In SortedList you cannot store keys of different data types in the same SortedList because the compiler will throw an exception. 
+	So, always add the key in your SortedList of the same type.
+ - You can also cast key/value pair of SortedList into DictionaryEntry.
+
+
+
+-------------------------------
+
+HashTable
+
+The Hashtable is a non-generic collection that stores key-value pairs, similar to generic Dictionary<TKey, TValue> collection. 
+It optimizes lookups by computing the hash code of each key and stores it in a different bucket internally and
+ then matches the hash code of the specified key at the time of accessing values.
+ 
+Hashtable Characteristics
+	- Hashtable stores key-value pairs.
+	- Comes under System.Collection namespace.
+	- Implements IDictionary interface.
+	- Keys must be unique and cannot be null.
+	- Values can be null or duplicate.
+	- Values can be accessed by passing associated key in the indexer e.g. myHashtable[key]
+	- Elements are stored as DictionaryEntry objects.
+	
+	Hashtable numberNames = new Hashtable();
+	numberNames.Add(1,"One"); //adding a key/value using the Add() method
+	numberNames.Add(2,"Two");
+	numberNames.Add(3,"Three");
+	
+	foreach(DictionaryEntry de in numberNames)
+    Console.WriteLine("Key: {0}, Value: {1}", de.Key, de.Value);
+	
+Update Hashtable
+You can retrieve the value of an existing key from the Hashtable by passing a key in indexer. 
+The Hashtable is a non-generic collection, so you must type cast values while retrieving it.
+
+	//creating a Hashtable using collection-initializer syntax
+	var cities = new Hashtable(){
+		{"UK", "London, Manchester, Birmingham"},
+		{"USA", "Chicago, New York, Washington"},
+		{"India", "Mumbai, New Delhi, Pune"}
+	};
+		
+	string citiesOfUK = (string) cities["UK"]; //cast to string
+	string citiesOfUSA = (string) cities["USA"]; //cast to string
+	
+	Console.WriteLine(citiesOfUK);
+	Console.WriteLine(citiesOfUSA);
+	
+	cities["UK"] = "Liverpool, Bristol"; // update value of UK key
+	cities["USA"] = "Los Angeles, Boston"; // update value of USA key
+	
+Remove Elements in Hashtable
+The Remove() method removes the key-value that match with the specified in the Hashtable. 
+It throws the KeyNotfoundException if the specified key not found in the Hashtable, 
+so check for an existing key using the ContainsKey() method before removing.
+
+Use the Clear() method to remove all the elements in one shot.
+
+---------------------------------
+Stack
+
+C# - Stack<T>
+Stack is a special type of collection that stores elements in LIFO style (Last In First Out). 
+C# includes the generic Stack<T> and non-generic Stack collection classes. It is recommended to use the generic Stack<T> collection.
+
+Stack is useful to store temporary data in LIFO style, and you might want to delete an element after retrieving its value.
+
+Stack<T> Characteristics
+    - Stack<T> is Last In First Out collection.
+    - It comes under System.Collection.Generic namespace.
+    - Stack<T> can contain elements of the specified type. 
+	  It provides compile-time type checking and doesn't perform boxing-unboxing because it is generic.
+	- Elements can be added using the Push() method. Cannot use collection-initializer syntax.
+	- Elements can be retrieved using the Pop() and the Peek() methods. It does not support an indexer.
+	
+Push(T)		Inserts an item at the top of the stack.
+Peek()		Returns the top item from the stack.
+Pop()		Removes and returns items from the top of the stack.
+Contains(T)	Checks whether an item exists in the stack or not.
+Clear()		Removes all items from the stack.
+
+---------------------------------
+
+Queue
+
+C# - Queue<T>
+Queue is a special type of collection that stores the elements in FIFO style (First In First Out), exactly opposite of the Stack<T> 
+collection. 
+It contains the elements in the order they were added. C# includes generic Queue<T> and non-generic Queue collection. 
+It is recommended to use the generic Queue<T> collection.
+
+Queue<T> Characteristics
+	- Queue<T> is FIFO (First In First Out) collection.
+	- It comes under System.Collection.Generic namespace.
+	- Queue<T> can contain elements of the specified type. It provides compile-time type checking and doesn't perform boxing-unboxing because it is generic.
+	- Elements can be added using the Enqueue() method. Cannot use collection-initializer syntax.
+	- Elements can be retrieved using the Dequeue() and the Peek() methods. It does not support an indexer.
+	
+Enqueue(T)	Adds an item into the queue.
+Dequeue		Returns an item from the beginning of the queue and removes it from the queue.
+Peek(T)		Returns an first item from the queue without removing it.
+Contains(T)	Checks whether an item is in the queue or not
+Clear()		Removes all the items from the queue.	
+
+----------------------------------
+Only Generic Collections
+
+C# - List<T>
+The List<T> is a collection of strongly typed objects that can be accessed by index and having methods for sorting, searching, 
+	and modifying list. 
+It is the generic version of the ArrayList that comes under System.Collection.Generic namespace.
+
+List<T> Characteristics
+	- List<T> equivalent of the ArrayList, which implements IList<T>.
+	- It comes under System.Collections.Generic namespace.
+	- List<T> can contain elements of the specified type. It provides compile-time type checking and doesn't perform boxing-unboxing 
+		because it is generic.
+	- Elements can be added using the Add(), AddRange() methods or collection-initializer syntax.
+	- Elements can be accessed by passing an index e.g. myList[0]. Indexes start from zero.
+	- List<T> performs faster and less error-prone than the ArrayList.
+	
+Add				Adds an element at the end of a List<T>.
+AddRange		Adds elements of the specified collection at the end of a List<T>.
+BinarySearch	Search the element and returns an index of the element.
+Clear			Removes all the elements from a List<T>.
+Contains		Checks whether the specified element exists or not in a List<T>.
+Find			Finds the first element based on the specified predicate function.
+Foreach			Iterates through a List<T>.
+Insert			Inserts an element at the specified index in a List<T>.
+InsertRange		Inserts elements of another collection at the specified index.
+Remove			Removes the first occurrence of the specified element.
+RemoveAt		Removes the element at the specified index.
+RemoveRange		Removes all the elements that match the supplied predicate function.
+Sort			Sorts all the elements.
+TrimExcess		Sets the capacity to the actual number of elements.
+TrueForAll		Determines whether every element in the List<T> matches the conditions defined by the specified predicate.
+
+------------------------------------
+
+Dictionary
+
+C# - Dictionary<TKey, TValue>
+The Dictionary<TKey, TValue> is a generic collection that stores key-value pairs in no particular order.
+
+Dictionary Characteristics
+	- Dictionary<TKey, TValue> stores key-value pairs.
+	- Comes under System.Collections.Generic namespace.
+	- Implements IDictionary<TKey, TValue> interface.
+	- Keys must be unique and cannot be null.
+	- Values can be null or duplicate.
+	- Values can be accessed by passing associated key in the indexer e.g. myDictionary[key]
+	- Elements are stored as KeyValuePair<TKey, TValue> objects.
+	
+Creating a Dictionary
+	- You can create the Dictionary<TKey, TValue> object by passing the type of keys and values it can store. 
+	- The following example shows how to create a dictionary and add key-value pairs.
+
+		IDictionary<int, string> numberNames = new Dictionary<int, string>();
+		numberNames.Add(1,"One"); 
+		
+Access Dictionary Elements
+	The Dictionary can be accessed using indexer. Specify a key to get the associated value. 
+	You can also use the ElementAt() method to get a KeyValuePair from the specified index.
+	
+	//use ContainsKey() to check for an unknown key
+	if(cities.ContainsKey("France")){  
+		Console.WriteLine(cities["France"]);
+	}
+	
+	//use TryGetValue() to get a value of unknown key
+	string result;
+	
+	if(cities.TryGetValue("France", out result))
+	{
+		Console.WriteLine(result);
+	}
+	
+	//use ElementAt() to retrieve key-value pair using index
+	for (int i = 0; i < cities.Count; i++)
+	{
+		Console.WriteLine("Key: {0}, Value: {1}", 
+												cities.ElementAt(i).Key, 
+												cities.ElementAt(i).Value);
+	}
+	
+
+Update Dictionary
+Update the value of a key by specifying a key in the indexer. 
+It will throw the KeyNotFoundException if a key does not exist in the dictionary, therefore use the ContainsKey() method before accessing unknown keys.
+
+var cities = new Dictionary<string, string>(){
+	{"UK", "London, Manchester, Birmingham"},
+	{"USA", "Chicago, New York, Washington"},
+	{"India", "Mumbai, New Delhi, Pune"}
+};
+
+cities["UK"] = "Liverpool, Bristol"; // update value of UK key
+cities["USA"] = "Los Angeles, Boston"; // update value of USA key
+//cities["France"] = "Paris"; //throws run-time exception: KeyNotFoundException
+
+if(cities.ContainsKey("France")){
+    cities["France"] = "Paris";
+}
+
+Remove Elements in Dictionary
+	- The Remove() method deletes an existing key-value pair from a dictionary. 
+	- The Clear() method deletes all the elements of the dictionary.
+	
+	cities.Remove("UK"); // removes UK 
+	//cities.Remove("France"); //throws run-time exception: KeyNotFoundException
+	
+	if(cities.ContainsKey("France")){ // check key before removing it
+		cities.Remove("France");
+	}
+	
+	cities.Clear(); //removes all elements
+	
+SortedList
+
+
+Non Generic        															Generic
+
+ArrayList:IList, ICollection, IEnumerable, ICloneable						List<T>  SortedList		
+SortedList:IDictionary, ICollection, IEnumerable, ICloneable(Key,value)     Dictionary<Tkey,Tvalue> (key,value)
+HashTable		(key,value)													Stack<T>
+Stack:ICollection, IEnumerable, ICloneable									Queue<T>
+Queue																		LinkedList<T>
+
+
+Hashtable													             Dictionary
+
+A Hashtable is a non-generic collection.					             A Dictionary is a generic collection.
+Hashtable is defined under System.Collections namespace.	             Dictionary is defined under System.Collections.Generic namespace.
+In Hashtable, you can store key/value pairs of the same                  In Dictionary, you can store key/value pairs of same type.
+type or of the different type.	
+In Hashtable, there is no need to specify the type of the key and value. In Dictionary, you must specify the type of key and value.
+The data retrieval is slower than Dictionary due to boxing/ unboxing.	 The data retrieval is faster than Hashtable due to no boxing/ unboxing.
+In Hashtable, if you try to access a key that doesn’t present in the     In Dictionary, if you try to access a key that doesn’t present in the given 
+given Hashtable, then it will give null values.	 						 Dictionary, then it will give error.
+It is thread safe.														 It is also thread safe but only for public static members.
+It doesn’t maintain the order of stored values.							 It always maintain the order of stored values.

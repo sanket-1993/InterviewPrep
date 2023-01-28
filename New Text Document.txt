@@ -1,0 +1,51 @@
+difference between component and directive
+How many components can be present per DOM elmt
+How many Directives can be present per DOM elmt
+Which decorator is used to create component/directive
+What is module
+To create a module which decorator is used ?
+What are five important options which is present under @NgModule decorator & what it means
+Imports, declarations, bootstrap, providers,
+entryComponents
+Are you aware about lifecycle hooks ? which one you have used in your projects
+difference between constructor and ngOninit, difference between ngOnChanges & ngDoCheck, purpose of NgOndestroy, 
+Which one gets called first ngOninit or ngOnChanges?
+How many bindings you have used in you projects
+What is the purpose of [(ngModel)]
+Decorators ? - example of class decorators ? ,example of method decorators? Example of property decorators? , example of parameter decorator ?
+What is the syntax/command to create class/pipe/enum/directive/module/service ?
+How do you pass data from one component to other
+Parent to child ?
+Child to parent ?
+Sibling components - (no parent child relationship)
+Dependency injection ?
+How do you use service ? What is the purpose of service ?
+What is observables ? 
+What is an observer ? 
+What is subscribing?
+difference between promise & observable
+Multicasting ? 
+What is the purpose of *ngIf ? what is the difference between display:none & *ngIf
+What happens if you use script tag inside template
+<div><script>alert(‘ dangerous ’)</script></div>
+How to inject dynamic script in angular
+Interpolation ? can we use (==,+=,-=, new, ++,--, |, &) inside template expression/interpolation
+What are pipes?
+Custom pipe ? difference between pure & impure pipe ?
+What is bootstrapping module
+How do you perform error handling ?
+What are dynamic components
+What is an angular router ?
+Router outlet ?
+Router links?
+Active router links?
+Router events?
+Purpose of wildcard route?
+Do I always need a routing module?
+Compilation types ? JIT?AOT? What is the default compilation type? Difference between them ? Why do we need a compilation process ?
+How to declare nullable variables in angular ? user?:User 
+What is a service worker in angular?
+What is lazy loading ? How many modules are present in your project ? How do you pass data/use components from one module to another module ?
+What is angular material
+What is HTTPClient , HTTP interceptor ?
+security & performance

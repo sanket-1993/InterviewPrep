@@ -1,0 +1,569 @@
+Base class of the .NET framework->
+
+System is base namespace
+Object is the base class of all classes
+
+methods inside Object->
+
+Equals(Object)
+Determines whether the specified object is equal to the current object.
+
+Equals(Object,Object)
+Determines whether the specified object instances are considered equal.
+
+Finalize()
+Allows an object to try to free resources
+
+GetHashCode()
+default hash function.
+
+GetType()
+Type of the current instance.
+
+MemberwiseClone()
+shallow copy of the current Object.
+
+ReferenceEquals(Object,Object)
+Determines whether the specified Object instances are the same instance.
+
+ToString()
+Returns a string that represents the current object.
+
+
+Difference between abstraction and encapsulation.
+
+  - Abstraction solves problem at design level while Encapsulation solves problem at implementation level.
+  - Abstraction hides complexity by giving you a more abstract picture of the system while Encapsulation hides internal working so that 
+	you can change it later.
+  - Abstraction hides the irrelevant details found in the code whereas Encapsulation helps developers to organize the entire code easily.	
+
+	Abstraction														Encapsulation
+Abstraction is the process of gaining                  ||  While encapsulation is the process to contain the information.
+  the information.	                                   ||
+In abstraction, problems are solved at the design      ||  While in encapsulation, problems are solved at the implementation level.
+  or interface level.	                               ||
+Abstraction is the method of omitting/hiding the       ||  Whereas encapsulation is a method to hide the data in a single entity or unit 
+  unwanted information.								   ||   along with a method to protect information from outside.
+We can implement abstraction using abstract class      ||  Whereas encapsulation can be implemented using by access modifier 
+and interfaces.										   ||   i.e. private, protected and public.
+In abstraction, implementation complexities are hidden ||  While in encapsulation, the data is hidden using methods of getters 
+using abstract classes and interfaces.	               ||     and setters.
+The objects that help to perform abstraction           ||  Whereas the objects that result in encapsulation need not be abstracted.
+are encapsulated.	                                   ||
+
+------------------------------------------------
+
+       Abstract Class												          Interface
+It contains both declaration and definition part.	        || It contains only a declaration part.
+Multiple inheritance is not achieved by abstract class.	    || Multiple inheritance is achieved by interface.
+It can contain constructor.								    || It does not contain constructor.
+It can contain static members.							    || It does not contain static members.
+It can contain different types of access modifiers like     || It only contains public access modifier because everything in the interface 
+public, private, protected etc.							    ||  is public.
+The performance of an abstract class is fast.				|| The performance of interface is slow because it requires time to 
+															||  search actual method in the corresponding class.
+It is used to implement the core identity of class.			|| It is used to implement peripheral abilities of class.
+A class can only use one abstract class.					|| A class can use multiple interface.
+If many implementations are of the same kind and use common || If many implementations only share methods, then it  
+behavior, then it is superior to use abstract class.	    ||    is superior to use Interface.
+Abstract class can contain methods, fields, constants, etc.	|| Interface can only contains methods, properties, indexers, events.
+It can be fully, partially or not implemented.				|| It should be fully implemented.
+
+WHAT IS ASTRACT CLASS AND INTERFACE
+An interface can be used to define a contract behavior and it can also act as a contract between two systems to interact 
+while an abstract class is mainly used to define default behavior for subclasses, 
+it means that all child classes should have performed the same functionality.
+------------------------------------------------
+------------------------------------------------
+WHEN TO USE ABSTRACT CLASS?
+
+When to use an abstract class
+-An abstract class is a good choice if we are using the inheritance concept since it provides a common base class implementation to 
+	derived classes.
+-An abstract class is also good if we want to declare non-public members. In an interface, all methods must be public.
+-If we want to add new methods in the future, then an abstract class is a better choice. 
+	Because if we add new methods to an interface, then all of the classes that already implemented that interface will have 
+	to be changed to implement the new methods.
+-If we want to create multiple versions of our component, create an abstract class. 
+	Abstract classes provide a simple and easy way to version our components. By updating the base class, 
+	all inheriting classes are automatically updated with the change. 
+	Interfaces, on the other hand, cannot be changed once created. 
+	If a new version of an interface is required, we must create a whole new interface.
+-Abstract classes have the advantage of allowing better forward compatibility. 
+	Once clients use an interface, we cannot change it; if they use an abstract class, 
+		we can still add behavior without breaking the existing code.
+	If we want to provide common, implemented functionality among all implementations of our component, use an abstract class.
+-Abstract classes allow us to partially implement our class, whereas interfaces contain no implementation for any members.
+ 
+------------------------------------------------ 
+------------------------------------------------
+
+WHEN TO USE AN INTERFACE -
+-If the functionality we are creating will be useful across a wide range of disparate objects, use an interface.
+	Abstract classes should be used primarily for objects that are closely related, 
+	whereas interfaces are best suited for providing a common functionality to unrelated classes.
+-Interfaces are a good choice when we think that the API will not change for a while.
+-Interfaces are also good when we want to have something similar to multiple inheritances since we can implement multiple interfaces.
+-If we are designing small, concise bits of functionality, use interfaces. 
+  If we are designing large functional units, use an abstract class.
+-------------------------------------------------
+
+WHY ABSTRACT CLASS FOR COMMON FUNCTIONALITY OTHER THAN CLASS?
+MEMORY MANAGEMENT WITH ABSTRACT CLASS?
+
+"When the base class is a normal class ( i.e. not an abstract class), 
+then wouldn't the base class be automatically instantiated ..."
+
+When a derived class is instantiated a single memory allocation is made. 
+That allocation is used to store all the fields of the derived class and all other classes in its inheritance chain, 
+there is no distinct memory allocation made for any base class.
+
+--------------------------------------------------
+abstract class can implement interface-->yes
+
+-----------------------------
+Can abstract class have constructor?
+- An abstract class can have a constructor BUT you can not create an object of abstract class so how do you use that constructor?
+- Thing is when you inherit that abstract class in your subclass you can pass values to its(abstract's) constructor through 
+	super(value) method in your subclass and no you don't inherit a constructor.
+- so using super you can pass values in a constructor of the abstract class and as far as I remember it has to be the first statement 
+	in your method or constructor.
+
+    public class Maruti: Car
+    {
+        public Maruti(int wheels): base(wheels)
+        {
+
+        }
+    }
+	
+-----------------------------
+- Abstract type can not be sealed and static	**********
+-----------------------------
+WHAT IS DIFF BETWEEN IQUERYABLE AND IENUMERABLE.
+
+ -IEnumerable exists in System.Collections Namespace. -IQueryable exists in System. Linq Namespace.
+ -IEnumerable doesn’t support lazy loading.           -IQueryable support lazy loading
+ -Querying data from a database, IEnumerable execute a select query on the server side, load data in-memory on a client-side and then 
+	filter data so it does more work and it is slow.
+ -Querying data from a database, IQueryable execute the select query on the server side with all filters so it is fast.
+ -When querying data from in-memory collections like List, Array etc you should use IEnumerable. 
+ -When querying data from out-memory (like remote database, service) collections you should use IQueryable
+ 
+dbContext dc = new dbContext ();
+IEnumerable<SocialMedia> list = dc.SocialMedias.Where(p => p.Name.StartsWith("T"));
+list = list.Take<SocialMedia>(1);
+
+internally converted to SELECT [t0].[ID], [t0].[Name] FROM [SocialMedia] AS [t0] WHERE [t0].[Name] LIKE @p0
+
+dbContext dc = new dbContext ();
+IQueryable<SocialMedia> list = dc.SocialMedias.Where(p => p.Name.StartsWith("T"));
+list = list.Take<SocialMedia>(1);
+
+ internally converted to SELECT TOP 1 [t0].[ID], [t0].[Name] FROM [SocialMedia] AS [t0] WHERE [t0].[Name] LIKE @p0
+-----------------------------
+static constructor VS normal constructor
+->static constructor gets called only once
+ - Static constructors cannot be inherited or overloaded.
+ - A static constructor cannot be called directly and is only meant to be called by the common language runtime (CLR). 
+	It is invoked automatically.
+ - Access modifiers are not allowed on static constructor	
+-----------------------------
+-----------------------------
+Can static constructor be overloaded
+No. parameterized static constructor is not possible.
+-----------------------------
+-----------------------------
+Why constructor is private?
+ To prevent class instantiation outside scope of class. -> Used in singleton design pattern
+-----------------------------
+-----------------------------
+difference between var and dynamic.
+    var s = 10;
+    s = "String"; --> Complile time error thrown here itself
+    dynamic d = 10;
+    d = "string"; --> Works fine
+	
+         Object	                                                                                       ||                          Var																									   ||										Dynamic
+The object was introduced with C# 1.0	                                                               || Var was introduced with C# 3.0	                                                                                               || Dynamic was introduced with C# 4.0
+It can store any kind of value because the object is the base class of all type in .NET framework.	   || It can store any type of value but It is mandatory to initialize var types at the time of declaration.	                       || It is not mandatory to initialize dynamic types at the time of declaration.
+The compiler has little information about the type.	                                                   || It is type-safe i.e. Compiler has all information about the stored value, so that it doesn't cause any issue at run-time.	       || It is not type safe i.e. Compiler doesn't have any information about the type of variable.
+The object type can be passed as a method argument and method also can return object type.	           || Var type cannot be passed as a method argument and method cannot return object type. Var type work in the scope where it defined.|| Dynamic type can be passed as a method argument and method also can return dynamic type.	
+Need to cast object variable to original type to use it and performing desired operations.	           || No need to cast because the compiler has all information to perform operations.	                                               || Casting is not required but you need to know the properties and methods related to stored type.
+Cause the problem at run time if the stored value is not getting converted to an underlying data type. || Doesn't cause a problem because the compiler has all information about stored value.	                                           || Cause problem if the wrong properties or methods are accessed because all the information about stored value is getting resolve only at run time.
+Useful when we don’t have more information about the data type.	                                       || Useful when we don’t know the actual type i.e. type is anonymous.	                                                               || Useful when we need to code using reflection or dynamic languages or with the COM objects because you need to write less code.
+
+-----------------------------
+one to one mapping with constructor --> only one parametrless, only one parameterized
+-----------------------------
+-----------------------------
+CLEAN UP UNMANAGED RESOURCES
+	- Although the .NET framework frees managed memory and resources transparently, it's not as adept at freeing unmanaged resources; 
+	you have to help it out by implementing the Dispose and Finalize patterns in your code. 
+	- When the .NET framework instantiates an object, it allocates memory for that object on the managed heap. 
+	- The object remains on the heap until it's no longer referenced by any active code, 
+	 at which point the memory it's using is "garbage," ready for memory deallocation by the .NET Garbage Collector (GC). 
+	- Before the GC deallocates the memory, the framework calls the object's  Finalize()  method, 
+	  but developers are responsible for calling the  Dispose()  method.
+
+	- The two methods are not equivalent. Even though both methods perform object clean-up, there are distinct differences between them. 
+	- To design efficient .NET applications, it's essential that you have a proper understanding of both how the .NET framework 
+	cleans up objects and when and how to use the Finalize and Dispose methods. 
+
+	- When we create unmanaged objects, GC is unable to clear them and we need to release such objects explicitly when we finished 
+		using them. 
+	- Mostly unmanaged objects are wrapped/hide around operating system resources like file streams, database connections, 
+		network related instances, handles to different classes, registries, pointers etc. 
+	- GC is responsible to track the life time of all managed and unmanaged objects but still GC is not aware of releasing 
+		unmanaged resources.
+
+ An Insight Into the Dispose and Finalize Methods
+
+	- The .NET garbage collector manages the memory of managed objects (native .NET objects) 
+		but it does not manage, nor is it directly able to clean up unmanaged resources. 
+	- Managed resources are those that are cleaned up implicitly by the garbage collector. 
+	 You do not have to write code to release such resources explicitly. 
+	- In contrast, you must clean up unmanaged resources (file handlers, database collections, etc.) explicitly in your code.
+
+	- There are situations when you might need to allocate memory for unmanaged resources from managed code. 
+	  As an example, suppose you have to open a database connection from within a class. 
+	- The database connection instance is an unmanaged resource encapsulated within this class and should be released as soon as 
+		you are done with it. 
+	- In such cases, you'll need to free the memory occupied by the unmanaged resources explicitly, 
+		because the GC doesn't free them implicitly.
+
+Briefly, the GC works as shown below:
+
+	- It searches for managed objects that are referenced in managed code.
+	- It then attempts to finalize those objects that are not referenced in the code.
+	- Lastly, it frees the unreferenced objects and reclaims the memory occupied by them.
+
+	- The GC maintains lists of managed objects arranged in "generations." A generation is a measure of the relative lifetime 
+	  of the objects in memory. 
+	- The generation number indicates to which generation an object belongs. 
+	- Recently created objects are stored in lower generations compared to those created earlier in the application's life cycle. 
+	  Longer-lived objects get promoted to higher generations. 
+	- Because applications tend to create many short-lived objects compared to relatively few long-lived objects, 
+	  the GC runs much more frequently to clean up objects in the lower generations than in the higher ones.
+	  
+It is used to free unmanaged resources like files, database connections etc. at any time.	|| It can be used to free unmanaged resources (when you implement it) like files, database connections etc. held by an object before that object is destroyed.
+Explicitly, it is called by user code and the class which is implementing dispose method,   || 
+must has to implement IDisposable interface.	                                            || Internally, it is called by Garbage Collector and cannot be called by user code.
+It belongs to IDisposable interface.	      												|| It belongs to Object class.
+It's implemented by implementing IDisposable interface Dispose() method.					|| It's implemented with the help of destructor in C++ & C#.
+There is no performance costs associated with Dispose method.								|| There is performance costs associated with Finalize method since it doesn't clean the memory immediately and called by GC automatically.
+
+public class MyClass : IDisposable
+{
+ private bool disposed = false;
+ 
+ //Implement IDisposable.
+ public void Dispose()
+ {
+	Dispose(true);
+	GC.SuppressFinalize(this);
+ }
+
+ protected virtual void Dispose(bool disposing)
+ {
+	if (!disposed)
+	{
+	if (disposing)
+	{
+		// TO DO: clean up managed objects
+	}
+	
+		// TO DO: clean up unmanaged objects
+	
+	disposed = true;
+ }
+ }
+}
+
+\\\If you want to implement Finalize method, it is recommended to use Finalize and Dispose method together as shown below:
+
+// Using Dispose and Finalize method together
+public class MyClass : IDisposable
+{
+ private bool disposed = false;
+ 
+ //Implement IDisposable.
+ public void Dispose()
+ {
+	Dispose(true);
+	GC.SuppressFinalize(this);
+ }
+
+ protected virtual void Dispose(bool disposing)
+ {
+	if (!disposed)
+	{
+		if (disposing)
+		{
+		// TO DO: clean up managed objects
+		}
+		
+		// TO DO: clean up unmanaged objects
+		
+		disposed = true;
+	}
+ }
+ 
+ //At runtime C# destructor is automatically Converted to Finalize method
+ ~MyClass()
+ {
+ Dispose(false);
+ }
+} 
+
+** A Dispose method should call the GC.SuppressFinalize() method for the object of a class which has destructor 
+	because it has already done the work to clean up the object, then it is not necessary for the garbage collector 
+	to call the object's Finalize method.
+
+-----------------------------
+-----------------------------
+WHAT IS MANAGED AND UNMANAGED OBJECTS/RESOURCES?
+
+MANAGED OBJECTS are created, managed and under scope of CLR, pure .NET code managed by runtime, Anything that lies within 
+.NET scope and under .NET framework classes such as string, int, bool variables are referred to as managed code.
+
+UNMANAGED OBJECTS are created outside the control of .NET libraries and are not managed by CLR, 
+example of such unmanaged code is COM objects, file streams, connection objects, Interop objects. 
+(Basically, third party libraries that are referred in .NET code.)
+-----------------------------
+GARBEG COLLECTION GENERATION STEPS LEVEL??
+
+0 Generation (Zero):This generation holds short-lived objects, e.g., Temporary objects. 
+					GC initiates garbage collection process MORE FREQUENTLY in this generation.
+					When you instantiate a new object, it goes in this generation by default. 
+					The exceptions are objects whose sizes are equal to or greater than 85,000 bytes. 
+					Those objects are large, so they go straight into generation 2.
+1 Generation (One): This generation is the buffer between short-lived and long-lived objects.
+2 Generation (Two): This generation holds long-lived objects like a static and global variable, that needs to be persisted for 
+					a certain amount of time. 
+					Objects which are not collected in generation Zero, are then moved to generation 1, 
+					such objects are known as survivors, similarly objects which are not collected in generation One, 
+					are then moved to generation 2 and from there onwards objects remain in the same generation.
+					GC takes place here LESS FREQUENTLY.
+
+HOW GC DECIDES IF OBJECTS ARE LIVE?
+GC checks the below information to check if the object is live:
+
+ 1 - It collects all handles of an object that are allocated by user code or by CLR
+ 2 - Keeps track of static objects, as they are referenced to some other objects
+ 3 - Use stack provided by stack walker and JIT
+ 
+WHEN GC GETS TRIGGERED?
+There are no specific timings for GC to get triggered, GC automatically starts operation on the following conditions:
+
+ 1 - When virtual memory is running out of space.
+ 2 - When allocated memory is suppressed acceptable threshold (when GC found if the survival rate (living objects) is high, 
+		then it increases the threshold allocation).
+ 3 - When we call GC.Collect() method explicitly, as GC runs continuously, we actually do not need to call this method.
+-----------------------------
+-----------------------------
+FUNCTION OVERLOADING/OVERRIDING/METHOD HIDING(METHOD SHADOWING)
+	- Method hiding is also called shadowing in C#. 
+	- We are hiding method of base class in derived class.
+	- The method of the parent class is available to the child class without using the override keyword in shadowing. 
+	- The child class has its own version of the same function.
+
+Define a behavior that is specific to the subclass type in overriding, you, which means a subclass can implement 
+	a parent class method based on its requirement.
+Hiding REDEFINES THE COMPLETE METHOD, whereas overriding REDEFINES ONLY THE IMPLEMENTATION OF THE METHOD.
+In Overriding, you can access the base class using the child class’ object overridden method.
+Shadowing has cannot access the child class methods from base class object.
+
+Overriding																							Hiding
+
+In method overriding, you need to define the method of a parent class   |  In method hiding, you just simply create a method in a parent 
+as a virtual method using virtual keyword and the method of child class |  class and in child class you need to define that method using 
+as an overridden method using override keyword.							|  new keyword.
+																		| 
+It only redefines the implementation of the method.						|  In method hiding, you can completely redefine the method.
+																		| 
+Here overriding is an object type.										|  Here hiding is a reference type.
+																		| 
+If you do not use override keyword, then the compiler will not          |  If you do not use the new keyword, then the compiler will 
+override the method. Instead of the overriding compiler will hide       |  automatically hide the method of the base class.
+the method.	                                                            | 
+																		| 
+In method overriding, when base class reference variable pointing       |  In the method hiding, when base class reference variable 
+to the object of the derived class, then it will call the overridden    |  pointing to the object of the derived class, then it will 
+method in the derived class.											|  call the hidden method in the base class.
+
+-----------------------------
+-----------------------------
+Event and DELEGATES
+
+What is a Delegate?
+	- Delegate is similar to a function pointer in C & C++ but the delegates are user defined types in C#. 
+	- It is a reference type variable that can hold a reference to the methods
+	- Make a note that delegates are not a member of class, but similar to a class. These are the backbone for events.
+
+When to use delegates?
+
+	- These are used to represent or refer to one or more functions.
+	- These can only be used to define call-back methods.
+	- In order to consume a delegate, we need to create an object to delegate.
+2 types of delegates->
+
+single cast and multicast
+class Program
+    {
+        public delegate int Delegate(int a);
+        public static void Main()
+        {
+            Test t = new Test();
+            Delegate objD = new Delegate(t.Dist);
+            Console.WriteLine("O/p from delegate: "+objD(100));
+            Console.Read();
+        }
+        
+    }
+
+    class Test
+    {
+        public int Dist(int a)
+        {
+            return a;
+        }
+    }
+-----------------------------
+-----------------------------
+How to check if null value is there inside null 
+Shorthand Syntax for Nullable Types => int?
+Use the '??' operator to assign a nullable type to a non-nullable type.
+{
+int? i = null;          
+int j = i ?? 0;
+Console.WriteLine(j);
+
+Answer is 0
+}
+-----------------------------
+-----------------------------
+Try Catch finally finalize 
+
+Finally
+The finally block is used to execute a given set of statements, whether an exception is thrown or not thrown. 
+For example, if you open a file, it must be closed whether an exception is raised or not.
+
+******************
+Finalize
+The Finalize in C# is used to free unmanaged resources like database connections etc. 
+The method finalize() is for unmanaged resources.
+Finalize() is called by the Garbage Collector before an object that is eligible for collection is reclaimed. 
+Garbage collector will take the responsibility to deallocate the memory for the unreferenced object. 
+The Garbage Collector calls this method at some point after there are no longer valid references to that object in memory.
+
+The framework does not guarantee that when this will happen, we can force for Garbage Collection but it will hurt performance 
+of a program. 
+Finalize() belongs to the Object class and it will be called by the runtime.
+
+using System;
+namespace DemoApplication{
+   public class Demo{
+      ~Demo(){
+         Console.WriteLine("Finalize called");
+      }
+   }
+}
+*****************************
+Dispose
+There are some resources like windows handles, database connections, network connections, files, etc. 
+which cannot be collected by the Garbage Collector. 
+If we want to explicitly release some specific objects then this is the best to implement IDisposable and override the Dispose() method of IDisposable interface.
+
+The Dispose() method is not called automatically and we must explicitly call it from a client application when an object is no longer needed. 
+Dispose() can be called even if other references to the object are alive.
+
+Microsoft recommends that we implement both Dispose and Finalize when working with unmanaged resources. 
+The Finalize implementation would run and the resources would still be released 
+when the object is garbage collected even if a developer neglected to call the Dispose method explicitly.
+*********************
+USING STATMENT INTERNALLY CONVERTED TO 
+
+{
+    var reader = new StringReader(manyLines);
+    TRY
+    {
+        string? item;
+        do
+        {
+            item = reader.ReadLine();
+            Console.WriteLine(item);
+        } while (item != null);
+    }
+    FINALLY
+    {
+        reader?.Dispose();
+    }
+}
+-----------------------------
+-----------------------------
+WHAT ARE EXTENSION METHODS
+
+Extension methods allow you to inject additional methods without modifying, deriving or recompiling the original class, 
+	struct or interface. 
+Extension methods can be added to your own custom class, .NET framework classes, or third party classes or interfaces.
+
+		public static class IntExtensions
+			 {
+				public static bool IsGreaterThan(this int i, int value)
+				{
+					return i > value;
+				}
+			}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int i = 10;
+
+        bool result = i.IsGreaterThan(100); 
+
+        Console.WriteLine(result);
+    }
+}
+
+The only difference between a regular static method and an extension method is that the first parameter of the extension method 
+	specifies the type that it is going to operator on, preceded by the this keyword.			
+-----------------------------
+-----------------------------
+WRITE A LINQ QUERY TO FIND SECOND LARGEST SALARY FROM A COLLECTION OF EMPLOYEES
+
+dbcontext.EmpSalary.OrderByDesc(o => o.Salary).Skip(1).FirstOrDefault();
+-----------------------------
+what is exception?
+How to define custom exception?
+Can single try with multiple catch?
+If you have multiple types of catch what should be sequence.
+If there is no catch block, finally only will it work?
+What is finally block.
+What is finally method
+-----------------------------
+what is cors
+[EnableCors(origins: "*", headers: "*", methods: "*")]
+-----------------------------
+What is tuple 
+
+The Tuple<T> class was introduced in .NET Framework 4.0. 
+A tuple is a data structure that contains a sequence of elements of different data types. 
+It can be used where you want to have a data structure to hold an object with properties, 
+	BUT YOU DON'T WANT TO CREATE A SEPARATE TYPE FOR IT.
+	
+Tuple<int, string, string> person = new Tuple<int, string, string>(1, "Steve", "Jobs");	
+var person = Tuple.Create(1, "Steve", "Jobs");
+person.Item1; // returns 1
+person.Item2; // returns "Steve"
+person.Item3; // returns "Jobs"
+
+Tuples can be used in the following scenarios:
+
+When you want to return multiple values from a method without using ref or out parameters.
+When you want to pass multiple values to a method through a single parameter.
+When you want to hold a database record or some values temporarily without creating a separate class.
+
+

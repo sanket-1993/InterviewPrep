@@ -1,0 +1,316 @@
+This,
+Abstraction
+Dependency injection
+singleton
+ref and out
+interface and abstract class
+delegates
+indexers
+. What is the difference between directcast and ctype
+generics
+Using Static
+What are the differences between events and delegates in C#?
+Attributes
+default keyword
+
+
+Q15: Refactor the code
+Mid 
+Top 117 C# Interview Questions  C#  117
+
+  
+Problem
+class ClassA
+{
+  public ClassA() { }
+
+  public ClassA(int pValue) {  }
+}
+
+// client program
+class Program
+{
+  static void Main(string[] args)
+  {
+    ClassA refA = new ClassA();
+  }
+}
+Is there a way to modify ClassA so that you can you call the constructor with parameters, when the Main method is called, without creating any other new instances of the ClassA?
+
+Answer
+The this keyword is used to call other constructors, to initialize the class object. The following shows the implementation:
+
+class ClassA
+{
+  public ClassA() : this(10)
+  { }
+
+  public ClassA(int pValue)
+  {  }
+}
+
+
+Q20: What is the difference between Interface and Abstract Class?
+Mid 
+Top 117 C# Interview Questions  C#  117  
+Answer
+There are some differences between Abstract Class and Interface which are listed below:
+
+A class can implement any number of interfaces but a subclass can at most use only one abstract class.
+An abstract class can have non-abstract methods (concrete methods) while in case of interface all the methods has to be abstract.
+An abstract class can declare or use any variables while an interface is not allowed to do so.
+In an abstract class all data member or functions are private by default while in interface all are public, we can't change them manually.
+In an abstract class we need to use abstract keyword to declare abstract methods while in an interface we don't need to use that.
+An abstract class can't be used for multiple inheritance while interface can be used as multiple inheritance.
+An abstract class use constructor while in an interface we don't have any type of constructor.
+
+
+https://www.fullstack.cafe/blog/c-sharp-interview-questions
+
+
+Here are some of the common differences between an interface and an abstract class in C#.
+A class can implement any number of interfaces but a subclass can at most use only one abstract class.
+An abstract class can have non-abstract methods (concrete methods) while in case of interface, all the methods have to be abstract.
+An abstract class can declare or use any variables while an interface is not allowed to do so.
+In an abstract class, all data members or functions are private by default while in an interface all are public, we can’t change them manually.
+In an abstract class, we need to use abstract keywords to declare abstract methods, while in an interface we don’t need to use that.
+An abstract class can’t be used for multiple inheritance while the interface can be used as multiple inheritance.
+An abstract class use constructor while in an interface we don’t have any type of constructor.
+
+
+https://www.infoworld.com/article/2928719/when-to-use-an-abstract-class-vs-interface-in-csharp.html#:~:text=The%20short%20answer%3A%20An%20abstract,take%20advantage%20of%20multiple%20interfaces.
+
+
+Indexes, How do you judge between abstract class and interfaces, convert.tostring() Vs. .Tostring(), how to decide the columns for indexes.
+Joins, Normalization.
+
+Best practices for code review, WHat can you do to increase performance of the application. Authorization., when is using block used.
+
+Difference between functions and Stored Procedures.	
+
+When is the memory allocated to Int and float, at the time of object creation or when they are declared.
+1-50
+
+60-74, 76-84, 173-176, 168-174, 200-205, 223-  225
+
+143, http interceptors
+
+View child vs view children.
+
+Observables vs promises
+
+
+AOT
+
+https://medium.com/@dinesh.jethoe/a-short-note-on-object-life-cycle-in-the-net-framework-c-5d5df9bb7b2f
+
+Static: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/static
+
+Performance: https://docs.microsoft.com/en-us/dotnet/framework/performance/performance-tips
+
+https://www.geeksforgeeks.org/angular-7-observables/
+
+How are destructors called-- Implicitly by Garbage Collector.
+
+
+Static construtors are called implicitly, parameters cant be passed tothem, will be called once atleast, does not have access modifiers, cannot be called directly, used to initialize static members of the class.
+
+https://www.tutorialspoint.com/difference-between-function-and-procedure
+
+https://www.guru99.com/microservices-interview-questions.html
+
+What are observables?
+Observables are declarative which provide support for passing messages between publishers and subscribers in your application. They are mainly used for event handling, asynchronous programming, and handling multiple values. In this case, you define a function for publishing values, but it is not executed until a consumer subscribes to it. The subscribed consumer then receives notifications until the function completes, or until they unsubscribe.
+
+What are the characteristics of Microservices?
+
+Essential messaging frameworks
+Decentralized Governance
+Easy Infrastructure automation
+Design for failure
+Infrastructure automation
+
+
+https://www.toptal.com/c-sharp/interview-questions
+
+https://www.softwaretestinghelp.com/c-sharp-interview-questions/
+
+https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#cast-expression
+
+
+Very Important:  https://raygun.com/blog/c-sharp-performance-tips-tricks/   ,,,   https://www.codeproject.com/Reference/593751/Code-Review-Checklist-and-Guidelines-for-Csharp-De
+
+
+1. Avoid Boxing and Unboxing.
+2. Avoid Blank Destructors.
+3. Avoid string concats.
+4. Dont create unnecessary objects.
+5. Proper Null checks
+6. Proper Casing
+7. Async programming
+8 For instead of for each
+
+
+public bool CheckIfPalindrome(string inputString)
+{
+ bool isPalindrome=true;
+ int startInd=0;
+ int l= strlen(inputString)-1
+	 while(startInd<=l/2)
+	 {
+		 if(inputString[startInd++]!=inputString[l--])
+		 {
+			isPalindrome= false;
+			break;
+		 }
+	 }
+ return isPalindrome;
+ }
+
+}
+
+abbbba
+
+public int AddDigits(int num)
+{
+	int sum=0;
+	while(num!=0)
+	{
+		sum= sum + num%10;
+		num=num/10;
+	}
+	return sum;
+}
+
+
+https://ankitsharmablogs.com/csharp-coding-questions-for-technical-interviews/
+
+
+Observer Pattern Example: Chatroom
+
+Abstract factory example: Ui controls that are platform independent.
+
+Use Strict in JS
+
+Duplex Contracts
+
+Memeory maagement in c#.
+
+When an array is copied to another array, how dows size gets affected.
+
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/indexers/
+
+
+What is WS -* Protocols?
+The SOAP protocol is used for message exchange between Web Services. But SOAP defines very basic semantics for message headers. It does not always define meaning to the header. Hence to extend SOAP, WS-* protocols specifications have been developed with semantics which can then be reused in various application scenarios.
+
+WS -* protocols are a set of protocols (means standards and specifications) that helps us to implement certain needs and behaviors of a service. These protocols describe how to exchange messages in a secure, transactional, and reliable way by using the headers in the SOAP message. WCF can implement the WS -* protocols by using WsHttpBinding. This binding makes use of some of the WS -* protocols and adds the needed behaviors, such as transactional message calls, reliability, discovery, and addressing.
+
+
+What are standard Endpoints?
+WCF provides a set of pre-defined endpoints known as Standard Endpoints for metadata exchange, discovery and web. You can configure the standard endpoints by using a config file and programmatically. Here is the list of standard endpoints :
+
+mexEndpoint
+
+webHttpEndpoint
+
+webScriptEndpoint
+
+workflowControlEndpoint
+
+announcementEndpoint
+
+discoveryEndpoint
+
+udpAnnouncementEndpoint
+
+udpDiscoveryEndpoint
+
+
+List out what are the different isolation levels provided in WCF?
+
+The different isolation levels provided in WCF are
+
+Read Uncommitted
+Read Committed
+Repeatable Read
+Serializable
+
+The latest features of ASP.NET Web API framework v2.0 are as follows:
+
+Attribute Routing
+Cross-Origin Resource Sharing
+External Authentication
+Open Web Interface NET
+HttpActionResult
+Web API OData
+
+During the Garbage collection process, as the first phase, the list of live objects is identified. In the second phase, references are updated for those objects which will be compacted. And in the last phase, the space occupied by dead objects are reclaimed. The remaining objects are moved to an older segment.
+
+
+
+Inhertance in detail, Web API filters/Authorization
+
+Constructor behaviour in inheritance.
+Destructor behaviousin inheritance.
+
+
+40. Mention what is the disadvantage of using innerHTML in JavaScript?
+
+If you use innerHTML in JavaScript the disadvantage is
+
+Content is replaced everywhere
+We cannot use like "appending to innerHTML"
+Even if you use +=like "innerHTML = innerHTML + 'html'" still the old content is replaced by html
+The entire innerHTML content is re-parsed and build into elements, therefore its much slower
+The innerHTML does not provide validation and therefore we can potentially insert valid and broken HTML in the document and break it 
+
+
+Common Table expressions and Rank.
+
+Collection Navigation Property
+
+
+1. Inheriting Multiple interfaces.
+2. New Keyword in Inheritace
+3. Design Patters(If you have used any.)
+4. What is D in solid principles.
+5. One line answer to improve the performance of an application.
+6. A scenario, There is a UI that has a text box to enter AAdhar number and you need to fetch fields lie First Name, Last Name, Mother's Name, Father's Name, DOB, Place of Birth, Address, Email, Contact number. Create and end to end architecture of this Application including DB table structure using Dotnet core and eeping in mind design patters and solid principles. 
+7. C# extension methods (asked in 3 interviews)
+8. Write a Linq query to find second largest salary from a collection of employees.
+9. Write a SQL query to find third largest salary from an employee table. Consider that multiple employees can have same salary.
+10. What is diff between Iqueryable and Ienumerable. 
+11. What is space complexity and time complexity.
+12. What are Records in C# (this is C# version 9 concept)
+13. A class has public, private and static constructor. Will it be compiled.
+14. A class has a static constructor(this prints "Static") and a default constructor(This prints "Default"). What wil be the output when two object of this class are created.
+15. What is static and private constructor.
+16. Is singleton pattern thread safe.
+17. What is protected internal.
+18. Difference between First and FirstOrDefault.
+19. Whar are collections in C#.
+20. What are Datastructurs in C#.
+21. What is the difference between Generic and Non Generic type.
+22. Difference between var, dynamic and object keyword.
+23. What are virtual and override keywords.
+24. Can multiple classes or interfaces be inherited?
+25. What is the basic flow in Git.
+26. Difference between common table variable and views.
+27. What are common table expressions.
+28. attribute Routing in Web API.
+29. How do we do caching in Web API.
+30. Is there any inbuilt mechanism for authorization in Web API. If yes then explain.
+31. How do you register dependencies that you inject through constructor.
+32. How do you do dependency injection in Dotnet Framework.
+33. What is Runtime polymorphism in C#.
+34. 4 pillars of oops. What is abstraction and how is it different from encapulation.
+35. What is Method hiding in C#.
+36. var a=5; a="abc"; Will this compile?
+37. What are the main points to be considered while doing a code review.
+38. What is Deep Copy and Shallow Copy.
+39. Code based Question related to Constructor and Destructor behaviour in inheritance, copying one array to another.
+40. How do you optimise a stores procedure.
+41. What is the return type of goupBy.
+42. Recursion(factorial program using recursion)
+

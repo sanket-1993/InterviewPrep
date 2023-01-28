@@ -1,0 +1,221 @@
+Printout the largesti set of palindromes present in a given string with its length.
+Note: String can be alphanumeric and may contain special characters.
+Example
+Input: String str = "12345!@#$abcdef12345fedcba54321";
+Output: abcdef and size 6
+
+
+for(int i=0; j=str.Length-1; i<str.Length/2;i++,j--)
+{
+	let cntr=0;
+	StringBuilder str = new StringBuilder();
+	Dict<number,string> dict =  new Dict<number,string>();
+	
+	
+	if(str[i] == str[j])
+	{
+		cntr++;
+		str.Append(str[i]);
+	}
+	else
+	{
+	    dict.Add(str,cntr);
+		cntr=0;
+		str = "";
+	}
+
+	dict
+}
+
+Sinleton Thread safe and access restricted to child/nested
+
+    public sealed class Singleton
+    {
+        private static Singleton _instance;
+
+        private static readonly Object pedlock = new Object();
+
+        public static Singleton singleton
+        {
+            get
+            {
+                lock (pedlock)
+                {
+                    if(_instance == null)
+                    {
+                        _instance = new Singleton();
+                    }
+                    return _instance;
+                }
+            }
+        }
+    }
+	
+	class Base
+{
+    public void print()
+    {
+        Console.WriteLine("Base: Print");
+    }
+    public void display()
+    {
+        Console.WriteLine("Base: display");
+    }
+}
+
+class Derived : Base
+{
+    public void print()
+    {
+        Console.WriteLine("Derived: Print");
+    }
+    public new void display()
+    {
+        Console.WriteLine("Derived: display");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Base b = new Derived();
+        b.print();  ----> base print
+        b.display();  --> base display
+		b.display();  --> override  -> derived display
+}
+
+
+
+
+
+public static class Test{
+
+	public static int Isgtreter(this int i)
+	{
+		return i>0;
+	}
+	
+		public static int IsEquel(this int i,int j)
+	{
+		return i == j;
+	}
+}
+
+
+
+
+int i = 11;
+
+i.IsPositive();
+
+i.IsEquel(20);
+
+
+A{
+void print()
+}
+
+B{
+void print()
+}
+
+
+class C:A,B
+{
+
+}
+
+
+Sealed Class UserService
+{
+	
+	private UserService _user;
+
+	private UserService()
+	{
+	}
+	
+	public static UserService getInstance()
+	{
+		if(_user == null)
+		{
+			_user = new UserService();
+		}
+		return _user;
+	}
+}
+
+
+content-type  ->
+accept
+
+
+
+Login compone
+
+
+
+.ts
+
+/Token
+
+GetToken(string u,string p)
+
+{
+
+	httpClient = new HttPclient();
+	
+	
+
+}
+
+
+
+[EnableCors("*","*","*")]
+
+
+person:     p_id, p_name, p_address, p_salary, d_id
+dept:         d_id, d_name 
+ 
+Write a query to get departments with no person assigned to:
+Using Left Join
+Using Not Exists
+Using Not In
+
+What's the best option in terms of SQL performance?
+
+
+Select p_id,p_name,p_address,d.d_id from person p left join dept d 
+on p.d_id = d.d_id 
+where d.d_id is null
+
+select p_id,p_name,p_address,p.d_id where p.id not in(select distinct d_id from dept )
+
+
+select p_id,p_name,p_address,p.d_id where p.id not exist(select distinct d_id from dept )
+
+
+
+person.rightJoin(dept,
+person.d_id,
+dept.d_id,
+(first,second) => new {
+	first.p_id,
+	first.p_name,
+	second.d_name
+}
+)
+
+Subject vs behvaious
+
+
+
+
+
+zip
+
+
+
+
+	
