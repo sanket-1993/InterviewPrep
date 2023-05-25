@@ -50,3 +50,39 @@ However, the attack could be delivered in a <form> tag with automatic execution 
    </form>
  </body>
 
+The OWASP Top Ten is a list of the most critical security risks that web applications commonly face. It is published by the Open Web Application Security Project (OWASP), a non-profit organization dedicated to improving the security of software applications. The OWASP Top Ten provides developers, security professionals, and organizations with an awareness of the most prevalent and impactful web application security risks.
+
+The current version of the OWASP Top Ten (as of my knowledge cutoff in September 2021) is OWASP Top Ten 2017. It highlights the following security risks:
+
+1. Injection: Injection vulnerabilities occur when untrusted data is sent to an interpreter as part of a command or query, 
+	which can lead to unintended or malicious execution of commands.
+
+2. Broken Authentication: This risk relates to issues in the authentication and session management processes, including 
+	weak passwords, inadequate session expiration, and session hijacking.
+
+3. Sensitive Data Exposure: This category encompasses vulnerabilities that could expose sensitive data, such as credit card numbers, 
+	passwords, or personal information, due to weak encryption, inadequate access controls, or improper handling.
+
+4. XML External Entities (XXE): XXE vulnerabilities occur when an application processes XML input that contains external entity 
+	references, allowing attackers to access internal files, perform remote code execution, or conduct denial-of-service attacks.
+
+5. Broken Access Control: This risk refers to inadequate or misconfigured access controls that allow unauthorized users to access 
+	privileged functionality or sensitive data.
+
+6. Security Misconfigurations: Security misconfigurations arise when systems, frameworks, or web applications are deployed with 
+	default or insecure configurations, leading to vulnerabilities that can be exploited by attackers.
+
+7. Cross-Site Scripting (XSS): XSS vulnerabilities occur when web applications allow untrusted data to be included in web pages, 
+	leading to the execution of malicious scripts in users' browsers.
+
+8. Insecure Deserialization: Insecure deserialization vulnerabilities arise when an application deserializes untrusted or 
+	manipulated data, potentially resulting in remote code execution, injection attacks, or other malicious activities.
+
+9. Using Components with Known Vulnerabilities: This risk pertains to the use of software components, libraries, or frameworks 
+	that have known security vulnerabilities, as attackers can exploit these vulnerabilities to compromise the application.
+
+10. Insufficient Logging and Monitoring: Inadequate logging and monitoring can make it difficult to detect security incidents, 
+	investigate attacks, or identify abnormal activities, thus hindering incident response and recovery efforts.
+
+The OWASP Top Ten is regularly updated to reflect emerging security risks and advancements in the threat landscape. 
+	It serves as a valuable resource for developers and organizations to prioritize and address web application security concerns.
