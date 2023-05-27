@@ -1,0 +1,227 @@
+What is Multicasting ? 
+
+In Angular, multicasting refers to the ability to share a single observable execution among multiple subscribers. It allows you to multicast 
+ the values emitted by an observable to multiple observers, rather than creating separate independent executions for each observer.
+
+By default, when you subscribe to an observable, a new execution of that observable is created for each subscriber. This means that each subscriber 
+ receives its own separate stream of values from the observable. However, there are scenarios where you may want to share the same set of values 
+  emitted by an observable among multiple subscribers. This is where multicasting comes into play.
+  
+  share(): The share() operator allows you to multicast the values of an observable to multiple subscribers. It automatically manages the creation 
+  and sharing of a single execution of the observable. The first subscriber triggers the execution, and subsequent subscribers share the emitted 
+  values without triggering a new execution.
+
+Example:
+import { Observable } from 'rxjs';
+import { share } from 'rxjs/operators';
+
+const observable$ = new Observable(observer => {
+  console.log('Observable execution started');
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+}).pipe(share());
+
+observable$.subscribe(value => console.log(`Subscriber A: ${value}`));
+observable$.subscribe(value => console.log(`Subscriber B: ${value}`));
+
+Observable execution started
+Subscriber A: 1
+Subscriber A: 2
+Subscriber A: 3
+Subscriber B: 1
+Subscriber B: 2
+Subscriber B: 3
+
+As you can see, the observable execution is triggered only once, and both subscribers receive the same values.
+
+publish(), connect(), and refCount(): These operators provide more control over multicasting and are often used together. 
+ publish() converts an observable into a connectable observable, connect() starts the execution of the connectable observable, and refCount() 
+  automatically connects and disconnects the connectable observable based on the number of subscribers.
+
+Example:
+import { Observable } from 'rxjs';
+import { publish, refCount } from 'rxjs/operators';
+
+const observable$ = new Observable(observer => {
+  console.log('Observable execution started');
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+}).pipe(publish(), refCount());
+
+observable$.subscribe(value => console.log(`Subscriber A: ${value}`));
+observable$.subscribe(value => console.log(`Subscriber B: ${value}`));
+
+Observable execution started
+Subscriber A: 1
+Subscriber B: 1
+Subscriber A: 2
+Subscriber B: 2
+Subscriber A: 3
+Subscriber B: 3
+
+In this example, the publish() operator converts the observable into a connectable observable, and refCount() automatically connects 
+ and disconnects the observable based on the number of subscribers. The first subscriber triggers the execution, and subsequent subscribers 
+  share the emitted values.
+  
+ ---------------------------------
+ 
+ promise
+ 
+ a Promise is an object that represents the eventual completion or failure of an asynchronous operation and its resulting value. 
+ It is a feature of JavaScript and is widely used in Angular for handling asynchronous operations, such as HTTP requests, timers, or any 
+ other asynchronous task.
+ 
+ A Promise can be in one of three states:
+
+Pending: The initial state, before the operation is completed or failed.
+Fulfilled: The state when the operation is successfully completed, and the promise resolves with a value.
+Rejected: The state when the operation fails, and the promise is rejected with an error.
+
+Promises provide a more structured and organized way of handling asynchronous operations compared to traditional callback functions. 
+They allow you to chain multiple asynchronous operations together and handle their results in a more readable and manageable way.
+
+In Angular, many asynchronous operations, such as HTTP requests with the HttpClient module or interactions with Angular's Router, return Promises 
+by default. Promises in Angular can be used with the .then() and .catch() methods to handle the resolved value or the rejected error.
+
+ getData(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      // Simulating an asynchronous operation (e.g., HTTP request)
+      setTimeout(() => {
+        const data = 'Hello, Angular!';
+        resolve(data);
+        // reject(new Error('An error occurred')); // Uncomment to simulate an error
+      }, 2000);
+    });
+  }
+  
+  this.getData().then((resolve)=>{
+      console.log(resolve);
+    }, (reject)=>{
+      console.log(reject);
+    })
+ 
+------------------------------------------
+
+What is observables ? 
+
+Observables are a key part of the reactive programming paradigm and are widely used in Angular for handling asynchronous data streams. 
+An Observable represents a sequence of values that are emitted over time, and it allows you to react to those values and perform actions 
+as they are emitted.
+
+Here are some important characteristics of observables:
+
+Asynchronous Data Streams: Observables can emit multiple values over time, including zero or more values, and eventually terminate either successfully 
+or with an error.
+
+Lazy Execution: Observables are lazy, meaning they don't start emitting values until someone subscribes to them. This makes them efficient because 
+they only execute when needed.
+
+Powerful Operators: Observables provide a wide range of operators that allow you to transform, filter, combine, and manipulate the emitted values.
+ Operators such as map, filter, merge, debounceTime, and many more enable you to create complex data processing pipelines.
+
+Error Handling: Observables provide built-in mechanisms for handling errors. You can use the .catchError() or .retry() operators to handle errors
+ and retry the operation if desired.
+
+Cancellation: Observables can be canceled by unsubscribing from them. This allows you to clean up resources and stop processing data when it's no
+ longer needed. Unsubscribing prevents memory leaks and unnecessary computations.
+ 
+ export class MyComponent {
+  data: number;
+
+  ngOnInit() {
+    const myObservable: Observable<number> = interval(1000); // Emits a number every second
+
+    this.mySubscription = myObservable.subscribe(
+      (value) => {
+        this.data = value;
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      },
+      () => {
+        console.log('Observable completed');
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.mySubscription.unsubscribe();
+  }
+}
+
+--------------------------------
+
+What is observer
+
+ an Observer is an object or function that subscribes to an observable and receives notifications (values or events) emitted by the observable. 
+ It acts as the consumer of the emitted data and defines the behavior to be executed when the observable emits values.
+ 
+ An Observer typically consists of three optional methods:
+
+next(): This method is called when the observable emits a value. It receives the emitted value as an argument and defines how to handle/process 
+ that value.
+
+error(): This method is called when the observable encounters an error. It receives the error as an argument and defines how to handle the
+ error condition.
+
+complete(): This method is called when the observable completes its emissions and indicates that no more values will be emitted. 
+ It does not receive any arguments.
+ 
+ const myObserver = {
+  next: (value) => {
+    console.log('Received value:', value);
+  },
+  error: (error) => {
+    console.error('An error occurred:', error);
+  },
+  complete: () => {
+    console.log('Observable completed');
+  }
+};
+
+myObservable.subscribe(myObserver);
+
+n this example, myObserver is an object that defines the behavior for handling the emitted values, error conditions, and completion event. 
+The next() method logs the received value to the console, the error() method logs the error to the console, and the complete() method logs 
+a completion message.
+
+The subscribe() method is used to subscribe the observer to the observable. When the observable emits values, the defined methods in the 
+observer are invoked accordingly.
+
+It's important to note that Angular provides the subscribe() method to work with observers and observables. Angular's built-in subscribe()
+ method handles the registration of the observer and manages the subscription lifecycle, including resource cleanup when the subscription is
+ no longer needed.
+
+Observers play a crucial role in reactive programming with observables, allowing you to define the behavior for consuming and reacting to 
+ asynchronous data streams emitted by observables.
+ 
+ --------------------------------------
+ 
+ What is subscribing?
+
+To execute the observable you have created and begin receiving notifications, you call its subscribe() method, passing an observer. 
+This is a JavaScript object that defines the handlers for the notifications you receive. 
+The subscribe() call returns a Subscription object that has an unsubscribe() method, which you call to stop receiving notifications.
+
+-----------------------------------------
+
+difference between promise & observable
+
+Observables																				||		Promises
+Emit multiple values over a period of time.												||	Emit a single value at a time.
+Are lazy: they’re not executed until we subscribe to them using the subscribe() method.	||	Are not lazy: execute immediately after creation.
+Have subscriptions that are cancellable using the unsubscribe() method,                 ||
+which stops the listener from receiving further values.	                                ||
+																						||	Are not cancellable.
+Provide the map for forEach, filter, reduce, retry, and retryWhen operators.			||	Don’t provide any operations.
+Deliver errors to the subscribers.														||	Push errors to the child promises.
+Observables handle errors through the second argument of the subscribe() method or by 	||
+using the .pipe() and .catchError() operators.											||  Promises handle errors using the .catch() method or by chaining 
+																						||		.then() and .catch() blocks.
+
+
+
+
+

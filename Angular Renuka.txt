@@ -1,17 +1,103 @@
+In programming, a lexical environment, also known as a scope, is a data structure that holds variable and function declarations 
+  and defines the rules for how these identifiers are accessed and resolved. 
+  It is associated with a specific point in the source code during the lexical analysis phase.
+
+Lexical environments play a crucial role in determining the visibility and lifetime of variables and functions within a program. 
+ They define the scope chain and provide the context for resolving identifiers and accessing their values.
+
+A lexical environment consists of two main components:
+
+Environment Record: It is a record or data structure that stores variable and function declarations within a specific scope. 
+This includes information such as the variable name, its value, and whether it is mutable (can be reassigned). 
+The environment record serves as a lookup table for resolving identifiers within the lexical scope.
+
+Outer Environment Reference: It references the lexical environment of the parent or outer scope. This reference allows for 
+the creation of nested scopes and establishes the scope chain, which is the order in which lexical environments are searched 
+to resolve identifiers.
+--------------------------
 What is closure?
 
-A closure is a function that remembers its outer variables and can access them.
+a closure is a combination of a function and the lexical environment within which that function was defined. 
+	It allows a function to access and manipulate variables from its outer (enclosing) scope, even after the outer function 
+		has finished executing.
+		
+		function outer() {
+				var outerVar = 'I am from the outer function';
+
+					function inner() {
+						console.log(outerVar);
+					}
+
+				return inner;
+		}
+
+		var closureFunc = outer(); // Assign the inner function to a variable
+
+		closureFunc(); // Output: "I am from the outer function"
+In this example, the outer function defines a variable outerVar and declares an inner function inner that logs the value of 
+ outerVar to the console.
+
+When outer is invoked and assigned to the variable closureFunc, it returns the inner function. The key aspect here is that 
+ the inner function maintains a reference to its outer lexical environment, even though outer has finished executing. 
+ This reference includes all the variables and their values in the scope of outer at the time of inner function creation.
+
+When closureFunc is called later, it can still access and access the variable outerVar from its enclosing scope, even though 
+outer has completed execution. This is the essence of a closure—capturing and preserving the variables and their values from 
+the outer scope for later use.
+
+Closures are powerful because they allow for data encapsulation and the creation of private variables. The inner function has 
+access to the outer function's variables but prevents direct modification by external code. This concept is widely used in functional programming and can be employed to implement techniques like currying, memoization, and more
+
+------------------------------------------
 
 difference between component and directive
 	- Directives add behaviour to an existing DOM element or an existing component instance
 	- Write a component when you want to create a reusable set of DOM elements of UI with custom behaviour. 
 	- Write a directive when you want to write reusable behaviour to supplement existing DOM elements.
+	
+	Components:
+
+    Components are self-contained and reusable building blocks that encapsulate the presentation and behavior of a part 
+	of the user interface.
+    They are typically associated with a template that defines the structure and layout of the component.
+    Components have their own data and logic and can maintain internal state.
+    Components can communicate with other components using input and output properties or events.
+    Examples of component-based frameworks are Angular and Vue.js.
+	
+	Directives:
+
+	Directives are markers or instructions that augment the behavior or appearance of elements in the DOM (Document Object Model).
+	They can modify the structure or behavior of HTML elements to provide additional functionality.
+	Directives can be classified into two types: structural directives and attribute directives.
+	Structural directives, such as *ngIf or *ngFor in Angular, modify the DOM by adding or removing elements based on conditions.
+	Attribute directives, such as ngStyle or ngClass in Angular, change the appearance or behavior of elements by manipulating their 
+	 attributes.
+	Directives are often used to extend the capabilities of HTML and create reusable custom behaviors.
+	Examples of directive-based libraries are Angular, where directives play a significant role, and React, where directives are 
+	referred to as "props" and "JSX."
+	
+	In summary, components are higher-level building blocks that encapsulate complete UI parts, while directives are instructions 
+	 applied to elements in the DOM to modify their behavior or appearance. 
+	 Components are self-contained entities with their own logic, data, and template, while directives are used to extend 
+	 or modify existing HTML elements or provide custom behaviors.
 ------------------------------------------
 How many components can be present per DOM element
 	- In angular life cycle hook every component is destroyed when new component load.
+	In most component-based frameworks, such as Angular or React, each DOM element can have only one component associated with it. This is because components represent self-contained entities that encapsulate their own logic, data, and template, and they are typically designed to manage a specific portion of the user interface.
+
+	When rendering components, they are usually mapped to specific elements in the DOM hierarchy. Each component instance is 
+	responsible for rendering its associated template and managing the behavior of the corresponding DOM element.
+	
+	While it's not possible to have multiple components directly associated with a single DOM element, it is possible to have 
+	nested components, where one component contains another as a child. This allows for the composition of complex UI structures 
+	by combining multiple components together. In such cases, each component manages its own portion of the DOM and can have 
+	its own child components.
+	
 ------------------------------------------	
-How many Directives can be present per DOM elmt
+How many Directives can be present per DOM element
 	- Many directives can be used per DOM element.
+	you can apply multiple directives to a single DOM element. The number of directives that can be applied depends on 
+	the specific framework or library you are using and the directives themselves.
 -------------------------------------
 
 Which decorator is used to create component/directive
@@ -38,15 +124,21 @@ in such a way that can be combined with other modules to create an application.
 To create a module which decorator is used ?
 
  @NgModule({
-	delcarations:[],
 	imports:[],
+	exports:[],
+	delcarations:[],
 	providers:[],
 	entryComponents:[]
  })
 ------------------------------------
 What are five important options which is present under @NgModule decorator & what it means
 Imports,exports, declarations, bootstrap, providers,entryComponents
+Imports: The imports property is used to import other modules into the current module. This allows for the reusability of components, 
+ directives, and services defined in other module.
 
+Exports: The exports property specifies the components, directives, or pipes that are accessible to other modules that import 
+ the current module. This allows for the reusability of the module's artifacts in other parts of the application.
+ 
 entryComponents: 
 An entry component is any component that Angular loads imperatively, 
 (which means you’re not referencing it in the template), by type. You specify an entry component by bootstrapping it in an NgModule, 
@@ -55,7 +147,11 @@ or including it in a routing definition.
 So this means that any component you have in the bootstrap array, or have defined in a route, is immediately an entryComponent. 
 This is because you do not reference these inside any template. 
 This prevents the compiler to treeshake these components out of the module.
-
+Also -->
+The entryComponents property is used to define components that are dynamically created at runtime, such as 
+ through the use of ComponentFactoryResolver. This property is typically used in scenarios like dynamic component loading or 
+ when using Angular's dynamic rendering features.
+ 
 bootstrap:
 A bootstrapped component is an entry component that Angular loads into the DOM during the bootstrap process (application launch). 
 Other entry components are loaded dynamically by other means, such as with the router.
@@ -64,8 +160,50 @@ Though these two mechanisms account for most entry components, if your app happe
 by type imperatively, you must add it to entryComponents explicitly.
 -------------------------------------
 What is difference between entryComponents and bootstrap?
+
+entryComponents is used for components that are dynamically created at runtime, while bootstrap is used to specify the root component
+ of the application that is loaded when the application starts. The components listed in entryComponents may not be statically
+ referenced in templates, while the components listed in bootstrap are the entry points that trigger the Angular application's
+ initialization process
 -------------------------------------
 What is lazy loading ? How many modules are present in your project ? 
+
+Lazy loading is a technique used in software development, particularly in web applications, to optimize the loading and performance 
+ of an application by deferring the loading of certain resources or modules until they are actually needed. It allows for the 
+  on-demand loading of specific parts of an application, rather than loading the entire application upfront.
+
+In the context of web development, lazy loading is commonly associated with JavaScript frameworks like Angular, React, or Vue.js. 
+ These frameworks provide mechanisms to divide an application into smaller, modular pieces called modules or chunks. 
+  Lazy loading allows these modules to be loaded asynchronously, typically when the user navigates to a specific route or triggers
+   a specific action.
+
+The main benefits of lazy loading include:
+
+Improved Initial Page Load Time: By loading only the essential resources required for the initial view of the application, 
+ lazy loading helps reduce the initial page load time. This can enhance the user experience, especially for applications with
+  large codebases.
+
+Reduced Network Bandwidth: Lazy loading allows for the fetching of additional resources, such as code modules or data, on-demand
+ as the user interacts with the application. This reduces the amount of data transferred initially, resulting in improved
+  network efficiency and reduced bandwidth consumption.
+
+Faster Application Startup: By loading only the necessary resources for the initial view and deferring the loading of other
+  parts until they are required, lazy loading helps to accelerate the application startup time. This can result in quicker
+   interactivity and responsiveness.
+
+Modular Code Organization: Lazy loading encourages modular code organization, as the application can be divided into separate
+  modules that are loaded independently. This promotes code maintainability, reusability, and separation of concerns.
+
+Better Performance on Low-bandwidth or Mobile Networks: Lazy loading is particularly beneficial for users on low-bandwidth or
+  mobile networks, where reducing the initial load size and optimizing resource fetching can significantly improve the
+   application's performance.
+
+Lazy loading can be implemented using various techniques, depending on the framework being used. For example, in Angular,
+ lazy loading is achieved by configuring the application's routing module to load specific modules on-demand using the
+  loadChildren property. Similarly, React supports lazy loading through the React.lazy() function and the Suspense component.
+
+Overall, lazy loading is a powerful optimization technique that helps improve application performance, reduce resource
+ consumption, and enhance the user experience by loading parts of an application when they are actually needed.
 inside app.module.ts
 
 const route = [
@@ -109,21 +247,39 @@ Angular offers eight lifecycle hooks to allow you to tap into lifecycle of direc
 	
 Angular calls these hooks methods in following order --
 
-1.ngOnChanges - Called after input and output binding value change.
-2.ngOnInit - Called once component is initailized.
+1.ngOnChanges - This hook is called when one or more data-bound input properties of a component change. It receives a SimpleChanges object containing 
+	the previous and current values of the changed properties.
+2.ngOnInit - This hook is called once after the first ngOnChanges hook is called and before the component's template is rendered. It is used for 
+	initialization logic such as retrieving data from a server or initializing component properties.
 3.ngDoCheck - Called immediately after ngOnChanges() on every change detection run, and immediately after ngOnInit() on the first run.
-4.ngAfterContentInit - Called after component content initailized.
-5.ngAfterContentChecked - Called after every check of component content
-6.ngAfterViewInit -Called after component's and child's views has been initailized
-7.ngAfterViewChecked -called every time after components and childs views has been checked.\
-8.ngOnDestry - called just before component or directive is destroyed
+	This hook is called during every change detection cycle and allows you to implement custom change detection logic. It is typically used 
+		for advanced use cases where you need fine-grained control over change detection.
+4.ngAfterContentInit - Called after component content initailized. This hook is called after the component's content, projected through ng-content, 
+	has been initialized
+5.ngAfterContentChecked - This hook is called after the component's projected content has been checked for changes.
+6.ngAfterViewInit -Called after component's and child's views has been initailized.This hook is called after the component's view has been fully 
+	initialized.
+7.ngAfterViewChecked -called every time after components and childs views has been checked.This hook is called after the component's view has been 
+	checked for changes.
+8.ngOnDestry - This hook is called just before the component is destroyed. It is used for cleaning up resources, unsubscribing from observables, or 
+	performing any necessary teardown logic.
 ------------------------------------------------------
 difference between constructor and ngOninit, purpose of NgOndestroy,
 
 The main difference between constructor and ngOnInit is that ngOnInit is lifecycle hook and runs after constructor.
 Component interpolated template and input initial values aren't available in constructor, but they are available in ngOnInit
 Constructor is used mainly for DI and ngOnInit used for Async operations and datat binding. async ngOnInit{await service.data();}
+
+the constructor is a standard TypeScript method used for dependency injection and basic initialization tasks, while ngOnInit is an Angular lifecycle 
+ hook specifically designed for component initialization and is the recommended place to perform initialization logic. 
+ The constructor is called before ngOnInit, and they serve different purposes in the component's lifecycle.
+ 
+ 
 difference between ngOnChanges & ngDoCheck
+
+ngOnChanges is specifically for handling changes to input properties, while ngDoCheck allows for custom change detection logic during 
+	every change detection cycle. ngOnChanges is triggered when input properties change, whereas ngDoCheck is executed on each change 
+	detection cycle, providing more flexibility for implementing custom change detection and performing advanced change tracking operations.
 
 purpose of NgOndestroy -
 
@@ -136,15 +292,28 @@ First ngOnChanges will be called then after first ngOnChanges ngOnInit will be c
 How many bindings you have used in you projects
 
 Interpolation {{}}
-Event ()
-Two-way [()]
---------------------------------------
-What is the purpose of [(ngModel)]
+Interpolation enables you to display dynamic data in your templates by evaluating expressions and displaying their values in the rendered HTML. 
+The expressions can include component properties, method calls, or even more complex expressions involving operators, conditionals, and template 
+variables.
 
-The ngModel directive binds an input,select, textarea (or custom form control) to a property on the scope
-It performs two way binding.
+Property Binding ([]): Property binding allows you to set an element's property value based on a component property. 
+It binds a target element property to a value or expression in the component. It is denoted by square brackets. For example:
+<button [disabled]="isDisabled">Click me</button>
+
+Event Binding (()): Event binding allows you to handle user events (such as clicks, key presses, etc.) and trigger actions in the component. 
+It binds a target element event to a method or function in the component. It is denoted by parentheses. For example:
+<button (click)="onClick()">Click me</button>
+
+Two-Way Binding ([()]): Two-way binding allows you to establish a two-way communication between a property in the component and an input control (
+e.g., input, select). It combines both property binding and event binding. It is denoted by square brackets with parentheses. For example:
+<input [(ngModel)]="name" />
+
+--------------------------------------
 
 Decorators ? 
+In the context of Angular, decorators are extensively used to define and configure various aspects of Angular components, services, directives, 
+ and more. Angular provides several built-in decorators, and you can also create custom decorators to extend the functionality of your application.
+ 
 An Angular Decorator is a function, using which we attach metadata to a class, method, accessor, property, or parameter. 
 We apply the decorator using the form @expression, where expression is the name of the decorator.
 
@@ -193,6 +362,37 @@ providedIn: UserModule
 -----------------------------------
 
 How do you pass data from one component to other
+
+Input/Output bindings:
+If the components have a parent-child relationship, you can use input and output bindings to pass data between them.
+The parent component can bind a property of the child component using the [property]="value" syntax to pass data to the child.
+The child component can emit events using the @Output decorator and the (event)="handler()" syntax to send data back to the parent.
+This method is useful for passing data and triggering actions between closely related components.
+
+Service:
+Components can share data through a shared service by injecting the service into both components.
+The service can have properties or methods to store and manipulate the data.
+One component can set the data in the service, and the other component can access it.
+This approach is suitable for components that don't have a direct parent-child relationship or when the data needs to be shared across multiple 
+ components.
+
+Routing parameters:
+If the components are associated with different routes, you can pass data through route parameters.
+The data can be included as route parameters when navigating from one component to another.
+The receiving component can read the route parameters using the ActivatedRoute service.
+This method is useful for passing data when navigating between different views or components.
+
+Local storage or session storage:
+If the data needs to persist across multiple page loads or sessions, you can store it in the browser's local storage or session storage.
+One component can save the data to the storage, and the other component can retrieve it.
+This approach is suitable for scenarios where data needs to be shared across different instances of the application.
+
+Event bus or message service:
+You can create a centralized event bus or message service that allows components to publish and subscribe to events or messages.
+One component can publish an event or message, and other components that are subscribed to it can receive the data.
+This method is useful for communication between loosely coupled components or when multiple components need to be notified of changes.
+
+
 generally if there is no strcturing between then then use pub-sub model
 Parent to child ? @Input() 
 Child to parent ? @Output()
@@ -212,6 +412,9 @@ Injecting services
 To inject a dependency in a component's constructor(), supply a constructor argument with the dependency type
 
 We can user one service in another.
+
+Yes, in Angular, you can use one service in another service or component by injecting the dependent service as a dependency. 
+Dependency injection is a core feature of Angular that allows you to create loosely coupled and reusable components/services.
 ----------------------------------
 How do you use service ? What is the purpose of service ?
 ----------------------------------
@@ -228,32 +431,6 @@ A special feature of Observables is that it can only be accessed by a consumer w
 An observable can deliver multiple values of any type. The API for receiving values is the same in any condition and the setup 
 	and the logic are both handled by the observable. Rest thing is only about subscribing and unsubscribing the information required.
 	
-What is an observer ? 
-
-Observers: To handle receiving observable messages, we need an observable interface which consists of 
-callback methods with respect to the messages by observables.
-	next: It is a handler for each message by observable, it may be called zero or more times after execution starts.
-	error: It is a handler for each error message. An error stops execution of the observable instance.
-	complete: It is a handles in which the completion of observable execution is notified.
----------------------------------	
-What is subscribing?
-
-To execute the observable you have created and begin receiving notifications, you call its subscribe() method, passing an observer. 
-This is a JavaScript object that defines the handlers for the notifications you receive. 
-The subscribe() call returns a Subscription object that has an unsubscribe() method, which you call to stop receiving notifications.
----------------------------------
-difference between promise & observable
-
-Observables																				||		Promises
-Emit multiple values over a period of time.												||	Emit a single value at a time.
-Are lazy: they’re not executed until we subscribe to them using the subscribe() method.	||	Are not lazy: execute immediately after creation.
-Have subscriptions that are cancellable using the unsubscribe() method,                 ||
-which stops the listener from receiving further values.	                                ||
-																						||	Are not cancellable.
-Provide the map for forEach, filter, reduce, retry, and retryWhen operators.			||	Don’t provide any operations.
-Deliver errors to the subscribers.															Push errors to the child promises.
-
-Multicasting ? 
 ------------------------------------------
 What is the purpose of *ngIf ? what is the difference between display:none & *ngIf
 
@@ -437,5 +614,41 @@ Router events?
 	 - Scroll: When the user scrolls.
 ------------------------------------------------
 What is angular material
+
+------------------------------------------------
 What is HTTPClient , HTTP interceptor ?
+
+HttpClient is a built-in module that provides a powerful way to send HTTP requests and handle responses. It is used for making HTTP calls to
+ a server-side API or other web services. The HttpClient module is part of @angular/common/http package and provides a higher-level abstraction
+ for working with HTTP in Angular applications.
+
+Sending HTTP requests: It provides methods like get(), post(), put(), delete(), etc., for making various types of HTTP requests.
+
+Handling response data: It allows you to handle the response data in different formats such as JSON, text, or blobs. You can also configure request
+ headers, URL parameters, and request options.
+
+Observables-based API: The HttpClient returns an Observable for HTTP requests, which allows you to work with the response asynchronously using
+ operators like map, filter, catchError, etc.
+ 
+ 
+HTTP interceptors are a powerful feature in Angular that allow you to intercept outgoing HTTP requests and incoming responses. An HTTP interceptor
+ is a service that sits between the HttpClient and the actual server, providing a way to inspect, modify, or handle the request and response
+ before they reach the client or server. 
+ 
+Interceptors are useful for implementing cross-cutting concerns such as authentication, logging, error handling, adding headers, or
+ modifying requests and responses globally across an application.
+ 
+intercept(): This method intercepts an outgoing request or incoming response. It receives the request or response, performs any necessary processing
+ or modifications, and returns an Observable that represents the intercepted request or response.
+
+(Optional) handle(): This method continues the request/response chain by passing the request or response to the next interceptor or the final
+ HttpClient handler. This method is called if the interceptor chooses to skip or not modify the request/response.
+------------------------------------------------
+
 security & performance
+------------------------------------------------
+What is shadow dom?
+
+Shadow DOM, which stands for "Shadow Document Object Model," is a web standard that provides encapsulation and scoping for HTML, CSS, and 
+JavaScript within a single DOM tree. It allows you to create isolated DOM subtrees with their own styling and behavior, separate from the main 
+document's DOM.
