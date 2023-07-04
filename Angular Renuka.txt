@@ -597,20 +597,27 @@ Active router links?
 Router events?
 
 	 - NavigationStart: Navigation starts.
-	 - RouteConfigLoadStart: Before the router lazy loads a route configuration.
-	 - RouteConfigLoadEnd: After a route has been lazy loaded.
-	 - RoutesRecognized: When the router parses the URL and the routes are recognized.
-	 - GuardsCheckStart: When the router begins the guards phase of routing.
-	 - ChildActivationStart: When the router begins activating a route's children.
-	 - ActivationStart: When the router begins activating a route.
-	 - GuardsCheckEnd: When the router finishes the guards phase of routing successfully.
-	 - ResolveStart: When the router begins the resolve phase of routing.
-	 - ResolveEnd: When the router finishes the resolve phase of routing successfully.
-	 - ChildActivationEnd: When the router finishes activating a route's children.
-	 - ActivationEnd: When the router finishes activating a route.
 	 - NavigationEnd: When navigation ends successfully.
 	 - NavigationCancel: When navigation is canceled.
 	 - NavigationError: When navigation fails due to an unexpected error.
+	 
+	 - RouteConfigLoadStart: Before the router lazy loads a route configuration.
+	 - RouteConfigLoadEnd: After a route has been lazy loaded.
+
+	 - ActivationStart: When the router begins activating a route.
+	 - ActivationEnd: When the router finishes activating a route.
+	 
+	 - RoutesRecognized: When the router parses the URL and the routes are recognized.
+	 
+	 - GuardsCheckStart: When the router begins the guards phase of routing.
+	 - GuardsCheckEnd: When the router finishes the guards phase of routing successfully.
+
+	 - ChildActivationStart: When the router begins activating a route's children.
+	 - ChildActivationEnd: When the router finishes activating a route's children.
+
+	 - ResolveStart: When the router begins the resolve phase of routing.
+	 - ResolveEnd: When the router finishes the resolve phase of routing successfully.
+
 	 - Scroll: When the user scrolls.
 ------------------------------------------------
 What is angular material
